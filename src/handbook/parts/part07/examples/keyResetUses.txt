@@ -1,0 +1,12 @@
+// 1. Edit form: start fresh for each order.
+//    Without the key, the form would keep the previous order's typed values.
+<OrderEditForm key={order.id} order={order} />
+
+// 2. Chat / notes per customer: one fresh input per customer.
+<NoteForm key={customer.id} customer={customer} />
+
+// 3. "Reset" button: change the key to remount the whole subtree.
+const [reportVersion, setReportVersion] = useState(0)
+
+<button onClick={() => setReportVersion(reportVersion + 1)}>Reset filters</button>
+<OrderReport key={reportVersion} />

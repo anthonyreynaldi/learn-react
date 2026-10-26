@@ -1,0 +1,21 @@
+type Order = { id: number; customer: string }
+declare const orders: Order[]
+
+const first = orders[0]
+
+// WITHOUT noUncheckedIndexedAccess (this project):
+//   first: Order
+first.customer          // ✓ compiles... and crashes at runtime if orders is empty
+
+// WITH noUncheckedIndexedAccess:
+//   first: Order | undefined
+first.customer
+// ✗ 'first' is possibly 'undefined'.
+
+// The same for lookups by key:
+const labels: Record<string, string> = {}
+labels['pending'].toUpperCase()
+// ✗ Object is possibly 'undefined'.
+
+// ✓ FIX: handle the "not there" case
+const name = orders[0]?.customer ?? 'No orders yet'

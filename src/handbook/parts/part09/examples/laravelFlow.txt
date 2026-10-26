@@ -1,0 +1,9 @@
+A form in Laravel (Blade)
+
+1. The browser shows a <form> rendered by Blade.
+2. The user clicks Submit. The BROWSER sends a POST and leaves the page.
+3. Laravel validates the request.
+4a. Invalid: Laravel redirects back. The page reloads completely.
+    old('customer') refills the fields, $errors shows the messages.
+4b. Valid: Laravel saves the order and redirects (e.g. to orders.show).
+    The page reloads again with a flash message.

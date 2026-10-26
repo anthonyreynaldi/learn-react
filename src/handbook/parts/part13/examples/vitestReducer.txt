@@ -1,0 +1,29 @@
+// npm i -D vitest   (not installed in this project)
+// src/features/orders/linesReducer.test.js
+import { describe, expect, it } from 'vitest'
+import { linesReducer } from './linesReducer'
+
+describe('linesReducer', () => {
+  it('adds an empty line with the given id', () => {
+    const before = [{ id: 'a', product: 'Floor Tile 60x60', qty: '2' }]
+
+    const after = linesReducer(before, { type: 'added_line', id: 'b' })
+
+    expect(after).toHaveLength(2)
+    expect(after[1]).toEqual({ id: 'b', product: '', qty: '1' })
+  })
+
+  it('does not mutate the old state', () => {
+    const before = [{ id: 'a', product: '', qty: '1' }]
+
+    linesReducer(before, { type: 'updated_line', id: 'a', field: 'qty', value: '5' })
+
+    expect(before[0].qty).toBe('1')
+  })
+
+  it('throws on unknown actions', () => {
+    expect(() => linesReducer([], { type: 'exploded' })).toThrow('Unknown action')
+  })
+})
+
+// Run: npx vitest   (watch mode, like phpunit --watch with a plugin)

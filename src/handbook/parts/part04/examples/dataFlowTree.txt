@@ -1,0 +1,22 @@
+              OrderPage            <- owns the data: orders, customer
+             /         \
+     props  /           \  props
+           v             v
+     OrderHeader      OrderTable   <- receive data, cannot change it
+                          |
+                          | props
+                          v
+                       OrderRow    <- receives one order
+
+Data flows DOWN only: parent -> child, through props.
+
+A child that wants to change something calls a function
+the parent passed down as a prop:
+
+  OrderPage    defines  function approveOrder(id) { ... }
+     |
+     |  onApprove={approveOrder}      (a prop, like any other)
+     v
+  OrderRow     calls    onApprove(order.id)  when the button is clicked
+     |
+     '-> the parent updates its own data, and the new data flows down again

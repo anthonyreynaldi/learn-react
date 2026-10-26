@@ -1,0 +1,14 @@
+// ✗ ERROR
+function formatRupiah(n: number): string {
+  return 'Rp ' + n.toLocaleString('id-ID')
+}
+
+const qtyInput = '3'       // e.g. e.target.value
+formatRupiah(qtyInput)
+// Argument of type 'string' is not assignable to parameter of type 'number'.
+
+// Same idea as the previous message, but for a FUNCTION CALL:
+// the value you pass doesn't match the parameter's type.
+
+// ✓ FIX
+formatRupiah(Number(qtyInput))

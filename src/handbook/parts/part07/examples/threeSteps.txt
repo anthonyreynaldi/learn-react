@@ -1,0 +1,19 @@
+Every screen update in React goes through three steps.
+
+1. TRIGGER   Something asks for a render.        (the guest places an order)
+             - the initial render: root.render(<App />)
+             - a state update: setCount(count + 1)
+
+2. RENDER    React calls your components to find   (the kitchen cooks)
+             out what the screen SHOULD look like.
+             - initial render: calls the root component
+             - re-render: calls the component whose state changed
+               (and its children), then compares the new JSX
+               with the previous JSX
+
+3. COMMIT    React applies the differences to the  (the waiter serves the dish)
+             real DOM.
+             - initial render: creates all DOM nodes (appendChild)
+             - re-render: changes ONLY the nodes that differ
+
+Then the BROWSER PAINTS the updated DOM to the screen.

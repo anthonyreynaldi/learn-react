@@ -1,0 +1,10 @@
+// ✗ ERROR
+export function orderLabel(order) {
+  return `#${order.id} ${order.customer}`
+}
+// Parameter 'order' implicitly has an 'any' type.
+
+// ✓ FIX: annotate every parameter (TS Part 3)
+export function orderLabel(order: Order) {
+  return `#${order.id} ${order.customer}`
+}

@@ -1,0 +1,13 @@
+<?php
+// PHP 7 type hints: checked at RUNTIME, when the line actually runs
+function formatRupiah(int $n): string
+{
+    return 'Rp ' . number_format($n, 0, ',', '.');
+}
+
+formatRupiah('abc'); // TypeError... but only when this code is executed
+
+// TypeScript: checked BEFORE running, in the editor and at build time.
+//   function formatRupiah(n: number): string { ... }
+//   formatRupiah('abc')  → red underline immediately, build fails
+// The types are then removed: the browser runs plain JavaScript.

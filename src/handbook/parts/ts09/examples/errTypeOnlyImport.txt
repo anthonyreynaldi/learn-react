@@ -1,0 +1,9 @@
+// ✗ ERROR
+import { ReactNode } from 'react'
+// 'ReactNode' is a type and must be imported using a type-only import
+// when 'verbatimModuleSyntax' is enabled.
+
+// ✓ FIX
+import type { ReactNode } from 'react'
+// or, together with values:
+import { useState, type ReactNode } from 'react'

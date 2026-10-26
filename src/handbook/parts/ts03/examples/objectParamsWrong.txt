@@ -1,0 +1,24 @@
+type Product = { name: string; price: number; stock: number }
+
+// ✗ WRONG: looks like types, but it is DESTRUCTURING WITH RENAMING (Part 0):
+// "take name and call it `string`, take price and call it `number`"
+function formatProduct({ name: string, price: number }) {
+  return `${name}: ${price}`
+}
+// Errors (strict mode):
+// Binding element 'string' implicitly has an 'any' type.
+// Binding element 'number' implicitly has an 'any' type.
+// Cannot find name 'price'.   (there is no variable price anymore: it was renamed to `number`)
+//
+// Notice there is NO error for `name`: it silently refers to the browser's
+// global window.name instead (an old DOM property). One more reason this is a trap.
+
+// ✓ RIGHT: the type goes AFTER the whole destructuring pattern
+function formatProduct({ name, price }: Product) {
+  return `${name}: ${price}`
+}
+
+// ✓ or with an inline type
+function formatProduct({ name, price }: { name: string; price: number }) {
+  return `${name}: ${price}`
+}

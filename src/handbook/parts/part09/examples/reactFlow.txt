@@ -1,0 +1,12 @@
+A form in React (talking to a Laravel API)
+
+1. React renders the form. Every field's value lives in state.
+2. The user clicks Submit. onSubmit runs, and e.preventDefault()
+   stops the browser's own POST. The page stays where it is.
+3. JavaScript sends the state as JSON with fetch() to /api/orders.
+4. Laravel validates the request.
+4a. Invalid: Laravel answers 422 with JSON errors.
+    React puts them into state and shows them under the fields.
+    The typed values are still in state (no old() needed).
+4b. Valid: Laravel answers 201 with the saved order.
+    React shows a message, resets the form, or navigates (Part 10+).

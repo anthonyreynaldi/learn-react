@@ -1,0 +1,11 @@
+// Measure before you optimize: wrap the suspicious calculation.
+console.time('filter orders')
+const visible = orders.filter((o) => o.customer.includes(search))
+console.timeEnd('filter orders')
+// Browser console: "filter orders: 0.42 ms"
+
+// Rules of thumb:
+// - Measure in a PRODUCTION build (npm run build && npm run preview).
+//   Development mode and StrictMode are slower and render twice.
+// - Under ~1 ms: not worth memoizing.
+// - Test on a slower machine too (DevTools → Performance → CPU throttling).

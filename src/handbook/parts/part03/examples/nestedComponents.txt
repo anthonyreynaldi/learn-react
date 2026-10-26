@@ -1,0 +1,34 @@
+// WRONG: OrderRow is defined INSIDE OrderTable.
+// Every time OrderTable renders, a brand-new OrderRow function is created.
+// React sees a "different" component each time, throws away the old DOM
+// and its state, and rebuilds it. This is slow and causes strange bugs
+// (e.g. inputs losing focus or typed text).
+function OrderTable() {
+  function OrderRow() {
+    return <tr><td>PT Maju Jaya</td></tr>
+  }
+
+  return (
+    <table>
+      <tbody>
+        <OrderRow />
+      </tbody>
+    </table>
+  )
+}
+
+// RIGHT: define every component at the top level of the file.
+// Pass any data it needs through props (Part 4).
+function OrderRow() {
+  return <tr><td>PT Maju Jaya</td></tr>
+}
+
+function OrderTable() {
+  return (
+    <table>
+      <tbody>
+        <OrderRow />
+      </tbody>
+    </table>
+  )
+}

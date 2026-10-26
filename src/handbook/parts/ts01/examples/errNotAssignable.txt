@@ -1,0 +1,11 @@
+// ✗ ERROR
+let total: number = 0
+total = '750000'
+// Type 'string' is not assignable to type 'number'.
+//      ^^^^^^^^ what you gave       ^^^^^^^^ what was expected
+
+// Read it as: "you put a STRING where a NUMBER belongs".
+// Common cause: values from inputs, query strings or FormData are always strings.
+
+// ✓ FIX: convert explicitly
+total = Number('750000')

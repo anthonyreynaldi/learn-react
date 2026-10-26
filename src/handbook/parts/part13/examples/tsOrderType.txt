@@ -1,0 +1,18 @@
+// A union type: status can ONLY be one of these three strings
+type OrderStatus = 'pending' | 'approved' | 'rejected'
+
+type Order = {
+  id: number
+  customer: string
+  total: number
+  status: OrderStatus
+  note?: string // ? = optional
+}
+
+const order: Order = { id: 101, customer: 'PT Maju Jaya', total: 750000, status: 'approved' }
+
+order.status = 'aproved'
+// ✗ Type '"aproved"' is not assignable to type 'OrderStatus'.
+
+order.totl
+// ✗ Property 'totl' does not exist on type 'Order'. Did you mean 'total'?

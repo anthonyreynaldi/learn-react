@@ -1,0 +1,15 @@
+// JavaScript, the classic way: reduce
+const groups = orders.reduce((acc, order) => {
+  if (!acc[order.status]) acc[order.status] = []
+  acc[order.status].push(order)
+  return acc
+}, {})
+
+// JavaScript, modern (ES2024): Object.groupBy does the same in one line
+const groups2 = Object.groupBy(orders, (order) => order.status)
+
+// Both give: { approved: [...], pending: [...], rejected: [...] }
+Object.entries(groups).forEach(([status, group]) => {
+  const subtotal = group.reduce((sum, o) => sum + o.total, 0)
+  console.log(status, group.length, subtotal)
+})

@@ -1,0 +1,10 @@
+# A new React + TypeScript project (instead of --template react)
+npm create vite@latest my-app -- --template react-ts
+cd my-app
+npm install
+npm run dev
+
+# Adding TypeScript to an EXISTING Vite + React project (what this handbook did):
+npm install -D typescript @types/react @types/react-dom
+# + a tsconfig.json, + "typecheck": "tsc --noEmit" in package.json
+# Then rename files to .ts / .tsx one at a time.

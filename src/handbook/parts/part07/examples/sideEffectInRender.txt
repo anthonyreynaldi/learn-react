@@ -1,0 +1,24 @@
+// WRONG: a side effect during render.
+// Rendering may run twice (StrictMode) or be paused and thrown away
+// (concurrent rendering), so this request can be sent 0, 1, 2… times.
+function OrderRow({ order }) {
+  fetch(`/api/orders/${order.id}/viewed`, { method: 'POST' }) // ✗ side effect
+  return <tr><td>{order.customer}</td></tr>
+}
+
+// RIGHT: side effects belong in event handlers.
+// They run exactly once, when the user actually clicks.
+function OrderRow({ order }) {
+  function handleApprove() {
+    fetch(`/api/orders/${order.id}/approve`, { method: 'POST' }) // ✓
+  }
+  return (
+    <tr>
+      <td>{order.customer}</td>
+      <td><button onClick={handleApprove}>Approve</button></td>
+    </tr>
+  )
+}
+
+// Side effects that must run because the component APPEARED on screen
+// (not because of a click) go into useEffect. That is Part 8.

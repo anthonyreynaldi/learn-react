@@ -1,0 +1,23 @@
+// Alternative fix: CANCEL the old request instead of ignoring its answer.
+useEffect(() => {
+  const controller = new AbortController()
+
+  async function loadCustomer() {
+    try {
+      const response = await fetch(`/api/customers/${customerId}`, {
+        signal: controller.signal, // connects this request to the controller
+      })
+      const data = await response.json()
+      setCustomer(data)
+    } catch (err) {
+      // An aborted request rejects with an AbortError. That is expected, not a real error.
+      if (err.name !== 'AbortError') setError(err.message)
+    }
+  }
+
+  loadCustomer()
+
+  // Cleanup: cancel the request if customerId changes or the component unmounts.
+  // In DevTools → Network the old request shows as "(canceled)".
+  return () => controller.abort()
+}, [customerId])

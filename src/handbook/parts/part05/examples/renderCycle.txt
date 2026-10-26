@@ -1,0 +1,14 @@
+The render cycle: what happens after a click
+
+1. Click       The user clicks <button onClick={handleClick}>.
+2. Handler     React calls handleClick(). count is still the old snapshot (0).
+3. Set         setCount(1) stores the new value and schedules a re-render.
+               Nothing on screen changes yet.
+4. Re-run      React calls Counter() again. This time useState returns 1.
+5. New JSX     The function returns new JSX: <p>Count: 1</p>.
+6. Compare     React compares the new JSX with the previous JSX
+               and finds the difference: the text "0" became "1".
+7. Update DOM  React changes only that text node in the real page.
+
+Every render is a fresh function call with its own snapshot of state,
+like every request in Laravel runs the controller from scratch.

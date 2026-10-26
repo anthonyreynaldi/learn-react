@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    // One switch that turns on a whole family of checks, including:
+    //   noImplicitAny      → a parameter without a type is an error, not silently `any`
+    //   strictNullChecks   → undefined/null must be handled ("possibly 'undefined'")
+    //   strictFunctionTypes, strictBindCallApply, useUnknownInCatchVariables, ...
+    "strict": true
+  }
+}
+
+// Without strict, this compiles without a single warning:
+//   function orderLabel(order) { return order.customer.toUpperCase() }
+//   orderLabel(undefined)   → crashes at runtime
+// With strict, both lines get an error before you ever run them.

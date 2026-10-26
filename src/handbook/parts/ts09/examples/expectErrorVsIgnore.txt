@@ -1,0 +1,17 @@
+// During a migration you sometimes need to silence one error temporarily.
+
+// @ts-expect-error: "I KNOW there is an error on the next line"
+// @ts-expect-error -- legacy helper takes a string, fix in OrderService migration
+formatRupiah(order.totalString)
+// If someone fixes the code and the error disappears, TypeScript reports:
+//   Unused '@ts-expect-error' directive.
+// → the comment never outlives the problem. Prefer this one.
+
+// @ts-ignore: "ignore the next line, whatever happens"
+// @ts-ignore
+formatRupiah(order.totalString)
+// Silences ANY error on that line, now and forever, including new, unrelated ones
+// added later. It never tells you when it's no longer needed.
+
+// Both are a last resort. Always add a reason after --, and search for them
+// (grep "@ts-expect-error") to clean them up as the migration progresses.

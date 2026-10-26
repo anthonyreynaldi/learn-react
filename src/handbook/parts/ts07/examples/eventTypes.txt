@@ -1,0 +1,20 @@
+Prop on the element          Handler parameter type                   Useful on e
+───────────────────────────  ───────────────────────────────────────  ──────────────────────────────
+<input onChange>             ChangeEvent<HTMLInputElement>            e.target.value, e.target.checked
+<textarea onChange>          ChangeEvent<HTMLTextAreaElement>         e.target.value
+<select onChange>            ChangeEvent<HTMLSelectElement>           e.target.value
+<form onSubmit>              SubmitEvent<HTMLFormElement>             e.preventDefault()
+<button onClick>             MouseEvent<HTMLButtonElement>            e.currentTarget, e.shiftKey
+<input onKeyDown>            KeyboardEvent<HTMLInputElement>          e.key ('Enter', 'Escape')
+<input onFocus / onBlur>     FocusEvent<HTMLInputElement>             e.target
+
+All of these are imported as types from 'react':
+  import type { ChangeEvent, SubmitEvent, MouseEvent } from 'react'
+(FormEvent from older tutorials is deprecated in current React types: use SubmitEvent
+ for forms and ChangeEvent for inputs.)
+
+TIP: you don't have to remember this table. Write the handler inline first:
+  <input onChange={(e) => ...} />
+then HOVER over `e` in VS Code. It shows the exact type, e.g.
+  (parameter) e: ChangeEvent<HTMLInputElement, HTMLInputElement>
+Copy that into your separate handler function.

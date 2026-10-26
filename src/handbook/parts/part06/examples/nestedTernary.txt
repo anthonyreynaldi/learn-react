@@ -1,0 +1,18 @@
+// HARD TO READ: nested ternaries
+<p>
+  {status === 'pending' ? (
+    <button>Approve</button>
+  ) : status === 'approved' ? (
+    isPaid ? <span>Paid</span> : <button>Print invoice</button>
+  ) : status === 'rejected' ? null : (
+    <span>Unknown</span>
+  )}
+</p>
+
+// EASIER: a lookup object, a variable with if/else, or a small component
+function OrderActions({ status, isPaid }) {
+  if (status === 'pending') return <button>Approve</button>
+  if (status === 'approved') return isPaid ? <span>Paid</span> : <button>Print invoice</button>
+  if (status === 'rejected') return null
+  return <span>Unknown</span>
+}

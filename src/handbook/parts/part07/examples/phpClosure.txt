@@ -1,0 +1,17 @@
+<?php
+// PHP closures capture variables BY VALUE with "use".
+$count = 0;
+
+$report = function () use ($count) {
+    echo "count was $count";
+};
+
+$count = 5;
+$report(); // "count was 0": the value at the moment the closure was created
+
+// fn() arrow functions also capture by value.
+$report2 = fn () => "count was $count"; // captures 5
+
+// Only "use (&$count)" would see later changes (by reference).
+// A React event handler behaves like the "use ($count)" version:
+// it sees the count of the render it was created in.

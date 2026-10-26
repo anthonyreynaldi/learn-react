@@ -1,0 +1,12 @@
+(A) SPA + JSON API: React owns the whole UI, Laravel is only an API
+
+  Browser                                   Laravel 5
+ ┌───────────────────────────┐   JSON      ┌───────────────────────────────┐
+ │ index.html + React bundle │ ──────────► │ routes/api.php                │
+ │ React Router: /orders,    │  fetch()    │ OrderController@index         │
+ │ /orders/101, /reports ... │ ◄────────── │ return Order::all();  (JSON)  │
+ └───────────────────────────┘             └───────────────────────────────┘
+
+- Laravel serves index.html once (or a separate web server does).
+- All navigation happens in the browser; only data travels as JSON.
+- Blade views are no longer used for these pages.

@@ -1,0 +1,20 @@
+LARAVEL (a framework) decides for you:
+  - Routing ............ routes/web.php
+  - Controllers ........ app/Http/Controllers
+  - Views .............. resources/views (Blade)
+  - Database / ORM ..... Eloquent, migrations
+  - Validation ......... $request->validate([...])
+  - Auth, queues, mail, config, folder structure ...
+
+REACT (a library) covers only ONE thing:
+  - Building the user interface (components that turn data into HTML)
+
+Everything else is YOUR choice (or another library):
+  - Routing ............ e.g. React Router, TanStack Router
+  - Fetching data ...... fetch(), or a library like TanStack Query
+  - Forms .............. plain React, or a form library
+  - Styling ............ plain CSS, CSS modules, Tailwind, ...
+  - Backend / database . not React's job at all (your Laravel API can do it)
+
+Framework: it calls your code (you fill in the blanks it gives you).
+Library:   you call its code (you decide how the app is put together).

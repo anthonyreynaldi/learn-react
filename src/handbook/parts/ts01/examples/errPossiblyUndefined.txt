@@ -1,0 +1,22 @@
+// ✗ ERROR
+type Order = { id: number; customer: string; total: number }
+declare const orders: Order[]
+
+const order = orders.find((o) => o.id === 101) // Order | undefined
+order.customer
+// 'order' is possibly 'undefined'.
+
+// find() returns undefined when nothing matches. TypeScript (with strict)
+// makes you handle that case instead of crashing at runtime with
+// "Cannot read properties of undefined".
+
+// ✓ FIX 1: check first (TypeScript understands the if = "narrowing")
+if (order) {
+  order.customer // ✓ here order is Order
+}
+
+// ✓ FIX 2: optional chaining + a fallback (Part 0)
+const name = order?.customer ?? 'Unknown customer'
+
+// ✓ FIX 3: early return in a component (Part 6)
+if (!order) return <p>Order not found.</p>

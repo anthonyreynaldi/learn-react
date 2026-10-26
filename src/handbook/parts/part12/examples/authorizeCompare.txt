@@ -1,0 +1,6 @@
+// React: hide the button for non-admins. This is ONLY user experience.
+{user.role === 'admin' && <button onClick={() => approve(order.id)}>Approve</button>}
+
+// Anyone can still send the request without the button:
+//   fetch('/api/orders/102/approve', { method: 'PUT', headers: { Authorization: 'Bearer ...' } })
+// (DevTools console, curl, Postman...). So the server MUST check too.

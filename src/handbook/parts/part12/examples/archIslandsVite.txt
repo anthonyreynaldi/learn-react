@@ -1,0 +1,23 @@
+// vite.config.js in the React project: build straight into Laravel's public/react
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+
+export default defineConfig({
+  plugins: [react()],
+  build: {
+    outDir: '../my-laravel-app/public/react', // Laravel serves it with asset('react/...')
+    emptyOutDir: true,
+    rolldownOptions: {
+      input: {
+        'order-table': 'src/islands/order-table.jsx', // one entry per island
+      },
+      output: {
+        // FIXED names (no hash), so Blade can hard-code them.
+        // Cache busting: asset('react/order-table.js') . '?v=' . filemtime(...)
+        entryFileNames: '[name].js',
+        chunkFileNames: 'chunks/[name].js',
+        assetFileNames: '[name][extname]',
+      },
+    },
+  },
+})

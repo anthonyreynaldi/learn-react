@@ -1,0 +1,14 @@
+                          useState                        useRef
+                          ─────────────────────────────   ─────────────────────────────
+Create                    const [x, setX] = useState(0)   const xRef = useRef(0)
+Read                      x                               xRef.current
+Change                    setX(1)                         xRef.current = 1
+Changing it re-renders?   YES                             NO
+Value inside one render   fixed snapshot                  always the latest value
+Read during render?       yes (that is what it's for)     no (only in handlers/effects)
+Typical use               anything shown on screen        timer ids, DOM elements,
+                                                          "latest value" for callbacks
+
+A ref is a plain box { current: ... } that React gives you back unchanged on
+every render. Think of it as an instance property ($this->timerId) on a PHP
+object, while state is what the view displays.

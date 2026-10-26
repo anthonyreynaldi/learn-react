@@ -1,0 +1,8 @@
+// src/utils/format.ts: the same function, with types
+export function formatRupiah(n: number): string {
+  return 'Rp ' + n.toLocaleString('id-ID')
+}
+
+formatRupiah(750000)      // ✓ "Rp 750.000"
+formatRupiah('750000')    // ✗ error while you type, before running anything:
+                          //   Argument of type 'string' is not assignable to parameter of type 'number'.

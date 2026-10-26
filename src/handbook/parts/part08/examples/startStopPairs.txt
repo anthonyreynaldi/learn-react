@@ -1,0 +1,18 @@
+// Every effect that STARTS something should return a cleanup that STOPS it.
+
+// Timer
+const id = setInterval(tick, 1000)             return () => clearInterval(id)
+const id = setTimeout(save, 500)               return () => clearTimeout(id)
+
+// Event listener (same function in both!)
+window.addEventListener('resize', onResize)    return () => window.removeEventListener('resize', onResize)
+
+// Connection
+const socket = connect(roomId)                 return () => socket.disconnect()
+
+// Data fetching
+let ignore = false                             return () => { ignore = true }
+const controller = new AbortController()       return () => controller.abort()
+
+// Document title / global changes
+const old = document.title                     return () => { document.title = old }

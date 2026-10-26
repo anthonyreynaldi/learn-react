@@ -1,0 +1,21 @@
+<?php
+// app/Policies/OrderPolicy.php
+class OrderPolicy
+{
+    public function approve(User $user, Order $order)
+    {
+        return $user->role === 'admin' && $order->status === 'pending';
+    }
+}
+
+// app/Http/Controllers/Api/OrderController.php
+public function approve(Order $order)
+{
+    // Throws → 403 "This action is unauthorized." if the policy says no.
+    // Runs on EVERY request, whatever the React UI shows or hides.
+    $this->authorize('approve', $order);
+
+    $order->update(['status' => 'approved']);
+
+    return $order;
+}

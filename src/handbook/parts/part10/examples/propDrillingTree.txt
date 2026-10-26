@@ -1,0 +1,8 @@
+App                     currentUser = { name: 'Budi', role: 'admin' }
+└── Layout              user={user}        passes it along ↓   (doesn't use it)
+    └── Sidebar         user={user}        passes it along ↓   (doesn't use it)
+        └── Menu        user={user}        passes it along ↓   (doesn't use it)
+            └── UserBadge                  USES it
+
+Adding a prop to UserBadge means editing every component on the way.
+Moving UserBadge somewhere else means re-plumbing the whole chain.

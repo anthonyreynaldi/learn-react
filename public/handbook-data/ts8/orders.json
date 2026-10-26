@@ -1,0 +1,5 @@
+[
+  { "id": 101, "customer": "PT Maju Jaya", "total": 750000, "status": "approved" },
+  { "id": 102, "customer": "CV Sinar Abadi", "total": 1250000, "status": "pending" },
+  { "id": 103, "customer": "PT Karya Baru", "total": 480000, "status": "rejected" }
+]

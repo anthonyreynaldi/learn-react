@@ -1,0 +1,14 @@
+// CASE 3: resetting state when a prop changes
+
+// ✗ WRONG: an effect that clears the note when the customer changes
+function NoteForm({ customer }) {
+  const [note, setNote] = useState('')
+
+  useEffect(() => {
+    setNote('')
+  }, [customer])
+  // First renders with the OLD note for the NEW customer, then clears it
+}
+
+// ✓ RIGHT: give it a key in the parent (Part 7). React mounts a fresh NoteForm.
+<NoteForm key={customer.id} customer={customer} />

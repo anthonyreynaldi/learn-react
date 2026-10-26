@@ -1,0 +1,29 @@
+// TanStack Query (Part 13) handles loading, errors, caching,
+// refetching, retries and race conditions for you.
+import { useQuery } from '@tanstack/react-query'
+
+function OrderList({ status }) {
+  const { data: orders, isPending, error, refetch } = useQuery({
+    queryKey: ['orders', status], // cache key: like a cache tag in Laravel
+    queryFn: async () => {
+      const response = await fetch(`/api/orders?status=${status}`)
+      if (!response.ok) throw new Error(`Server responded with ${response.status}`)
+      return response.json()
+    },
+    staleTime: 30_000, // treat cached data as fresh for 30 seconds
+  })
+
+  if (isPending) return <p>Loading…</p>
+  if (error) return <p>Error: {error.message}</p>
+
+  return (
+    <>
+      <button onClick={() => refetch()}>Reload</button>
+      <ul>
+        {orders.map((o) => (
+          <li key={o.id}>{o.customer}</li>
+        ))}
+      </ul>
+    </>
+  )
+}

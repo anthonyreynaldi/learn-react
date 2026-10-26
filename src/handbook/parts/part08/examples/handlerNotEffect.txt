@@ -1,0 +1,22 @@
+// CASE 2: something that happens because the USER did something
+
+// ✗ WRONG: set a flag in state, then react to it in an effect
+function ApproveButton({ orderId }) {
+  const [approved, setApproved] = useState(false)
+
+  useEffect(() => {
+    if (approved) {
+      fetch(`/api/orders/${orderId}/approve`, { method: 'POST' })
+    }
+  }, [approved, orderId])
+
+  return <button onClick={() => setApproved(true)}>Approve</button>
+}
+
+// ✓ RIGHT: do it directly in the event handler
+function ApproveButton({ orderId }) {
+  function handleApprove() {
+    fetch(`/api/orders/${orderId}/approve`, { method: 'POST' })
+  }
+  return <button onClick={handleApprove}>Approve</button>
+}

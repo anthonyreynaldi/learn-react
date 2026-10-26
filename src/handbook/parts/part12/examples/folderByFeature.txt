@@ -1,0 +1,26 @@
+Feature-based: grouped by WHICH PART OF THE APP it belongs to (scales better)
+
+src/
+├── app/
+│   ├── App.jsx            ← route table
+│   └── main.jsx
+├── features/
+│   ├── orders/            ← everything about orders together
+│   │   ├── OrdersPage.jsx
+│   │   ├── OrderDetailPage.jsx
+│   │   ├── OrderTable.jsx
+│   │   ├── OrderForm.jsx
+│   │   ├── ordersApi.js   ← api.get('/api/orders'), ...
+│   │   └── linesReducer.js
+│   ├── customers/
+│   │   ├── CustomersPage.jsx
+│   │   └── customersApi.js
+│   └── auth/
+│       ├── AuthContext.jsx
+│       ├── LoginPage.jsx
+│       └── RequireAuth.jsx
+└── shared/                ← used by several features
+    ├── api/client.js
+    ├── components/Button.jsx
+    ├── hooks/useDebouncedValue.js
+    └── utils/format.js

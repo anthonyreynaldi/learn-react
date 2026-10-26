@@ -1,0 +1,17 @@
+{{-- (B) Islands: a normal Blade page with ONE React widget inside --}}
+{{-- resources/views/orders/index.blade.php --}}
+@extends('layouts.app')
+
+@section('content')
+    <h1>Orders</h1>
+
+    {{-- React mounts into this div. Data is passed as JSON in a data-* attribute.
+         {{ }} escapes the JSON, and the browser un-escapes it in el.dataset. --}}
+    <div id="order-table" data-orders="{{ json_encode($orders) }}"></div>
+@endsection
+
+@push('scripts')
+    {{-- The files built by Vite (fixed names, see vite.config.js) --}}
+    <link rel="stylesheet" href="{{ asset('react/order-table.css') }}">
+    <script type="module" src="{{ asset('react/order-table.js') }}"></script>
+@endpush

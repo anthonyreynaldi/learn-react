@@ -1,0 +1,22 @@
+// Ask: WHY does this code run?
+
+// 1. Because the USER DID SOMETHING (clicked Approve) → event handler
+function OrderRow({ order }) {
+  async function handleApprove() {
+    await fetch(`/api/orders/${order.id}/approve`, { method: 'POST' })
+  }
+  return <button onClick={handleApprove}>Approve</button>
+}
+
+// 2. Because the component IS ON THE SCREEN (it must show orders) → effect
+function OrderList() {
+  const [orders, setOrders] = useState([])
+
+  useEffect(() => {
+    fetch('/api/orders')
+      .then((response) => response.json())
+      .then((data) => setOrders(data))
+  }, [])
+
+  return <p>{orders.length} orders</p>
+}

@@ -1,0 +1,9 @@
+<?php
+// Laravel: validation rules on the SERVER
+$this->validate($request, [
+    'customer'     => 'required|max:100',
+    'warehouse'    => 'required|in:SBY,JKT',
+    'deliveryDate' => 'required|date|after_or_equal:today',
+    'lines'        => 'required|array|min:1',
+    'lines.*.qty'  => 'required|integer|min:1',
+]);

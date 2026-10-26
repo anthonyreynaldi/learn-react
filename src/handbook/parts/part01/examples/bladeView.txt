@@ -1,0 +1,17 @@
+<?php
+// Laravel: the controller passes data to a view.
+// The view is a template: same data in -> same HTML out.
+
+class OrderController extends Controller
+{
+    public function index()
+    {
+        $orders = Order::all();
+
+        return view('orders.index', ['orders' => $orders]);
+    }
+}
+
+// resources/views/orders/index.blade.php
+// <h1>Orders ({{ count($orders) }})</h1>
+// <p>First customer: {{ $orders[0]->customer }}</p>

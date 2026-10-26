@@ -1,0 +1,54 @@
+// npm i react-hook-form zod @hookform/resolvers   (not installed in this project)
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
+
+// The rules, like a Laravel rules array:
+//   'customer'     => 'required|max:100',
+//   'warehouse'    => 'required|in:SBY,JKT',
+//   'deliveryDate' => 'required|date',
+const orderSchema = z.object({
+  customer: z.string().trim().min(1, 'Please enter a customer.').max(100),
+  warehouse: z.enum(['SBY', 'JKT'], { message: 'Please choose a warehouse.' }),
+  deliveryDate: z.string().date('Please choose a delivery date.'),
+})
+
+export function OrderForm() {
+  const {
+    register, // connects an input: name, onChange, ref (uncontrolled inputs → few re-renders)
+    handleSubmit, // validates first, calls onSubmit only with valid data
+    setError, // put Laravel's 422 errors on fields
+    formState: { errors, isSubmitting },
+  } = useForm({ resolver: zodResolver(orderSchema) })
+
+  async function onSubmit(data) {
+    try {
+      await api.post('/api/orders', data)
+    } catch (err) {
+      if (err instanceof ApiError && err.status === 422) {
+        for (const [field, messages] of Object.entries(err.errors)) {
+          setError(field, { message: messages[0] })
+        }
+      }
+    }
+  }
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)} noValidate>
+      <input {...register('customer')} />
+      {errors.customer && <p>{errors.customer.message}</p>}
+
+      <select {...register('warehouse')}>
+        <option value="">-- Choose --</option>
+        <option value="SBY">Surabaya</option>
+        <option value="JKT">Jakarta</option>
+      </select>
+      {errors.warehouse && <p>{errors.warehouse.message}</p>}
+
+      <input type="date" {...register('deliveryDate')} />
+      {errors.deliveryDate && <p>{errors.deliveryDate.message}</p>}
+
+      <button disabled={isSubmitting}>{isSubmitting ? 'Saving...' : 'Save order'}</button>
+    </form>
+  )
+}

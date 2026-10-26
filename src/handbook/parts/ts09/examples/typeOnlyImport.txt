@@ -1,0 +1,13 @@
+// ✗ ERROR (with verbatimModuleSyntax, as in this project)
+import { ReactNode } from 'react'
+// 'ReactNode' is a type and must be imported using a type-only import
+// when 'verbatimModuleSyntax' is enabled.
+
+// Why: a normal import is KEPT in the JavaScript output, but ReactNode doesn't
+// exist at runtime (types are erased, TS Part 1). `import type` is removed completely.
+
+// ✓ FIX 1: a type-only import
+import type { ReactNode } from 'react'
+
+// ✓ FIX 2: mix values and types in one import with an inline `type`
+import { useState, type ReactNode } from 'react'

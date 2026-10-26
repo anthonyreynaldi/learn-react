@@ -1,0 +1,64 @@
+// ═══ React cheat sheet ══════════════════════════════════════════════
+
+// STATE (Part 5)
+const [count, setCount] = useState(0)
+setCount(count + 1)                 // from the current snapshot
+setCount((c) => c + 1)              // updater: from the latest value (repeat/delayed updates)
+
+// IMMUTABLE UPDATES (Parts 5, 7)
+setOrder({ ...order, status: 'approved' })                          // object: copy + override
+setItems([...items, newItem])                                       // add
+setItems(items.filter((i) => i.id !== id))                          // remove
+setItems(items.map((i) => (i.id === id ? { ...i, qty: 5 } : i)))    // change one
+const sorted = items.toSorted((a, b) => a.total - b.total)          // sort a copy
+
+// LISTS (Part 6)
+{orders.map((o) => <OrderRow key={o.id} order={o} />)}              // key = stable database id
+
+// EFFECT with cleanup + ignore flag (Part 8)
+useEffect(() => {
+  let ignore = false
+  fetchOrder(id).then((data) => { if (!ignore) setOrder(data) })
+  return () => { ignore = true }                                    // cleanup: runs before next run/unmount
+}, [id])                                                            // re-run when id changes
+
+// CONTEXT provider pattern (Part 10)
+const AuthContext = createContext(null)
+export function AuthProvider({ children }) {
+  const [user, setUser] = useState(null)
+  return <AuthContext value={{ user, setUser }}>{children}</AuthContext>
+}
+export const useAuth = () => useContext(AuthContext)
+
+// REDUCER (Part 10)
+function reducer(state, action) {
+  switch (action.type) {
+    case 'added': return [...state, action.item]
+    default: throw new Error(`Unknown action: ${action.type}`)
+  }
+}
+const [items, dispatch] = useReducer(reducer, [])
+dispatch({ type: 'added', item })
+
+// REF (Part 11)
+const inputRef = useRef(null)
+<input ref={inputRef} />
+inputRef.current.focus()                                            // in handlers/effects, not render
+
+// CUSTOM HOOK skeleton (Part 11)
+export function useSomething(arg) {
+  const [value, setValue] = useState(null)
+  useEffect(() => { /* subscribe / fetch using arg */ return () => { /* cleanup */ } }, [arg])
+  return value
+}
+
+// ROUTER (Part 12)
+<BrowserRouter>
+  <Routes>
+    <Route element={<AppLayout />}>                                 {/* layout with <Outlet /> */}
+      <Route index element={<Dashboard />} />
+      <Route path="orders/:orderId" element={<OrderDetail />} />   {/* useParams() */}
+    </Route>
+    <Route path="*" element={<NotFound />} />
+  </Routes>
+</BrowserRouter>

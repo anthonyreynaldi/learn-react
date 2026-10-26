@@ -1,0 +1,13 @@
+<?php
+// Blade: @foreach is a template loop.
+//
+// <ul>
+//   @foreach ($products as $product)
+//     <li>{{ $product->name }} — {{ $product->price }}</li>
+//   @endforeach
+// </ul>
+//
+// It is the same as this plain PHP:
+foreach ($products as $product) {
+    echo "<li>{$product->name}</li>";
+}

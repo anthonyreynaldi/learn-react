@@ -1,0 +1,18 @@
+// src/islands/order-table.jsx: the entry file for ONE island
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import OrderTable from './OrderTable.jsx'
+
+const el = document.getElementById('order-table')
+
+// Only mount if this Blade page contains the island
+if (el) {
+  // data-orders="..." → el.dataset.orders (a JSON string) → a JS array
+  const orders = JSON.parse(el.dataset.orders)
+
+  createRoot(el).render(
+    <StrictMode>
+      <OrderTable initialOrders={orders} />
+    </StrictMode>,
+  )
+}

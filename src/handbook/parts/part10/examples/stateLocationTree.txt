@@ -1,0 +1,19 @@
+Where should selectedId live?
+
+OrdersPage
+├── Toolbar
+├── OrderList        ← needs selectedId (to highlight the row) and must CHANGE it
+└── OrderDetail      ← needs selectedId (to know which order to show)
+
+Step 1  List every component that USES the state:      OrderList, OrderDetail
+Step 2  Find their CLOSEST COMMON PARENT:              OrdersPage
+Step 3  Put the state there (or in a parent above it, if needed).
+Step 4  Pass the value down as props, and a function to change it:
+
+OrdersPage            const [selectedId, setSelectedId] = useState(null)
+├── Toolbar           (doesn't need it → doesn't get it)
+├── OrderList         selectedId={selectedId} onSelect={setSelectedId}
+└── OrderDetail       order={orders.find((o) => o.id === selectedId)}
+
+If only ONE component uses a piece of state, keep it inside that component.
+State that sits as low as possible re-renders less and is easier to follow.

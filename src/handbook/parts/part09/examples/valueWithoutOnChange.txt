@@ -1,0 +1,17 @@
+// ✗ WRONG: value without onChange. The input is read-only.
+// Typing does nothing, because React keeps setting the value back to state.
+<input value={customer} />
+
+// The browser console shows:
+// Warning: You provided a `value` prop to a form field without an `onChange` handler.
+// This will render a read-only field. If the field should be mutable use
+// `defaultValue`. Otherwise, set either `onChange` or `readOnly`.
+
+// ✓ RIGHT: controlled
+<input value={customer} onChange={(e) => setCustomer(e.target.value)} />
+
+// ✓ Also fine: intentionally read-only
+<input value={customer} readOnly />
+
+// ✓ Also fine: uncontrolled, with a starting value only (see "Uncontrolled inputs")
+<input defaultValue="PT Maju Jaya" />

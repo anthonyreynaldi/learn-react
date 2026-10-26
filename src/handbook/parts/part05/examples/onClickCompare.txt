@@ -1,0 +1,10 @@
+// RIGHT: pass the function. React calls it later, when the button is clicked.
+<button onClick={handleClick}>Save</button>
+
+// WRONG: handleClick() runs immediately, DURING render.
+// onClick receives its return value (undefined), so clicking does nothing.
+// If handleClick sets state, it causes an endless re-render loop.
+<button onClick={handleClick()}>Save</button>
+
+// RIGHT: need an argument? Wrap the call in an arrow function.
+<button onClick={() => handleApprove(101)}>Approve</button>

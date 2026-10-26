@@ -1,0 +1,36 @@
+// React 19: <form action={fn}> + useActionState (no extra library)
+import { useActionState } from 'react'
+
+// The action receives the previous state and the FormData (Part 9),
+// and returns the next state.
+async function saveOrder(previousState, formData) {
+  const data = Object.fromEntries(formData)
+  try {
+    const order = await api.post('/api/orders', data)
+    return { errors: {}, message: `Order #${order.id} saved.` }
+  } catch (err) {
+    if (err instanceof ApiError && err.status === 422) return { errors: err.errors, message: '' }
+    return { errors: {}, message: 'Network error.' }
+  }
+}
+
+export function OrderForm() {
+  // [current state, action to pass to <form>, isPending]
+  const [state, formAction, isPending] = useActionState(saveOrder, { errors: {}, message: '' })
+
+  return (
+    // action instead of onSubmit: no e.preventDefault(), React handles it
+    <form action={formAction}>
+      <input name="customer" />
+      {state.errors.customer && <p>{state.errors.customer[0]}</p>}
+
+      <select name="warehouse" defaultValue="SBY">
+        <option value="SBY">Surabaya</option>
+        <option value="JKT">Jakarta</option>
+      </select>
+
+      <button disabled={isPending}>{isPending ? 'Saving...' : 'Save order'}</button>
+      {state.message && <p>{state.message}</p>}
+    </form>
+  )
+}

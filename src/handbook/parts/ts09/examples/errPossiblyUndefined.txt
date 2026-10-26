@@ -1,0 +1,9 @@
+// ✗ ERROR
+const order = orders.find((o) => o.id === 101) // Order | undefined
+order.customer
+// 'order' is possibly 'undefined'.
+
+// ✓ FIX: handle "not found" first
+if (!order) return <p>Order not found.</p>
+order.customer // ✓ Order
+// or: order?.customer ?? 'Unknown'

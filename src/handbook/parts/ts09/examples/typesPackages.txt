@@ -1,0 +1,16 @@
+# A library written in JavaScript, whose types live in a separate @types package:
+npm install lodash
+npm install -D @types/lodash      # -D: types are only needed while developing
+
+# Many libraries ship their OWN types (react-router, @tanstack/react-query, zod):
+npm install zod                   # nothing else to install
+
+// ── No types exist at all? Declare the module yourself ──
+// src/types/old-library.d.ts
+declare module 'old-library'
+// Now `import oldLib from 'old-library'` compiles, but everything from it is `any`.
+
+// Better: describe just what you use.
+declare module 'old-library' {
+  export function formatInvoiceNumber(id: number): string
+}

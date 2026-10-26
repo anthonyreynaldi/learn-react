@@ -1,0 +1,31 @@
+// ✗ Three booleans: 2 × 2 × 2 = 8 combinations, but only 4 make sense.
+const [isLoading, setIsLoading] = useState(false)
+const [isSuccess, setIsSuccess] = useState(false)
+const [isError, setIsError] = useState(false)
+
+async function load() {
+  setIsLoading(true)
+  try {
+    await fetchOrders()
+    setIsSuccess(true)
+    // forgot setIsLoading(false) → isLoading AND isSuccess are both true
+  } catch {
+    setIsError(true)
+    // forgot to reset isSuccess from a previous load → success AND error
+  }
+}
+
+// ✓ One status string: impossible states can't be represented.
+const [status, setStatus] = useState('idle') // 'idle' | 'loading' | 'success' | 'error'
+
+async function load() {
+  setStatus('loading')
+  try {
+    await fetchOrders()
+    setStatus('success')
+  } catch {
+    setStatus('error')
+  }
+}
+
+const isLoading = status === 'loading' // derive booleans when you need them

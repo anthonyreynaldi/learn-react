@@ -1,0 +1,9 @@
+{
+  "message": "The given data was invalid.",
+  "errors": {
+    "customer": ["The customer field is required."],
+    "warehouse": ["The warehouse field is required."],
+    "deliveryDate": ["The delivery date must be a date after or equal to today."],
+    "lines.0.qty": ["The lines.0.qty must be at least 1."]
+  }
+}

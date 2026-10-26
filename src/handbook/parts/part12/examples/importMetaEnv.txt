@@ -1,0 +1,17 @@
+// Reading environment variables in React code (Vite)
+const API_URL = import.meta.env.VITE_API_URL ?? ''
+
+const response = await fetch(`${API_URL}/api/orders`)
+
+// Built-in values Vite always provides:
+import.meta.env.MODE      // 'development' (npm run dev) or 'production' (npm run build)
+import.meta.env.DEV       // true in development
+import.meta.env.PROD      // true in a production build
+import.meta.env.BASE_URL  // the base path the app is served from, usually '/'
+
+// At BUILD time Vite replaces import.meta.env.VITE_API_URL with the literal
+// string, e.g. "https://erp.ptmaju.co.id". The value ends up inside the JS
+// files that every visitor downloads. Change .env.production → rebuild.
+
+// Laravel comparison: env('APP_URL') is read on the SERVER at runtime.
+// Vite's variables are copied INTO the public JavaScript at build time.

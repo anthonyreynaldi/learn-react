@@ -1,0 +1,28 @@
+// useCallback(fn, deps) caches a FUNCTION between renders.
+const handleSelect = useCallback((id) => setSelectedId(id), [])
+
+// It is exactly the same as useMemo returning that function:
+const handleSelect = useMemo(() => (id) => setSelectedId(id), [])
+
+// Why? Every render creates new functions. For a memo child, a new function
+// is a changed prop (Object.is fails), so memo can't skip the render.
+
+
+// Dependencies: a callback must list what it reads from the component.
+const [orders, setOrders] = useState(initialOrders)
+
+// ✗ Reads orders → orders must be a dependency → new function after every change
+const handleApprove = useCallback(
+  (id) => setOrders(orders.map((o) => (o.id === id ? { ...o, status: 'approved' } : o))),
+  [orders],
+)
+
+// ✓ Updater function: React passes the latest orders in, so the callback
+//   reads nothing from the render → empty dependency array → ONE stable function
+const handleApprove = useCallback(
+  (id) => setOrders((prev) => prev.map((o) => (o.id === id ? { ...o, status: 'approved' } : o))),
+  [],
+)
+
+// State setters (setOrders) and dispatch from useReducer never change,
+// so they never need to be listed.

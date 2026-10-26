@@ -1,0 +1,18 @@
+# 1. Create a new project from the Vite "react" template
+#    (like: composer create-project laravel/laravel my-app)
+npm create vite@latest my-app -- --template react
+
+#    The "--" separator: everything BEFORE it is for npm,
+#    everything AFTER it is passed on to the create-vite tool.
+#    Without "--", npm would try to read --template itself.
+
+# 2. Go into the folder and install dependencies into node_modules/
+#    (like: composer install)
+cd my-app
+npm install
+
+# 3. Start the development server (like: php artisan serve)
+npm run dev
+
+#    VITE ready in 300 ms
+#    ->  Local:   http://localhost:5173/

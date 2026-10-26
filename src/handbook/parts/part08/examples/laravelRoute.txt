@@ -1,0 +1,19 @@
+<?php
+// routes/api.php (Laravel 5)
+// Routes in this file automatically get the /api prefix.
+
+use App\Order;
+
+// GET /api/orders
+Route::get('/orders', function () {
+    // Returning an Eloquent collection: Laravel converts it to JSON
+    // and sets the Content-Type: application/json header.
+    return Order::orderBy('id')->get();
+});
+
+// GET /api/orders/101
+Route::get('/orders/{id}', function ($id) {
+    return Order::findOrFail($id); // 404 JSON if not found
+});
+
+// In React:  const response = await fetch('/api/orders')

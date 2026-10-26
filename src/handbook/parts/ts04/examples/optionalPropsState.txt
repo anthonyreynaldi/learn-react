@@ -1,0 +1,22 @@
+// ✗ WEAKER: one shape with optional properties
+type OrdersState = {
+  status: 'loading' | 'success' | 'error'
+  orders?: Order[]
+  message?: string
+}
+
+// TypeScript accepts all of these "impossible" states:
+const a: OrdersState = { status: 'loading', orders: [...], message: 'Timeout' } // loading AND data AND error?
+const b: OrdersState = { status: 'success' }                                     // success without orders?
+const c: OrdersState = { status: 'error' }                                       // error without a message?
+
+// And it can't help you when reading:
+if (state.status === 'success') {
+  state.orders.map(...)
+  // ✗ 'state.orders' is possibly 'undefined'.   (even though success "always" has orders)
+}
+
+// ✓ STRONGER: a discriminated union (the example above).
+// Each status carries exactly its own data, so impossible states can't be written,
+// and after checking status TypeScript knows exactly which properties exist.
+// (The same idea as Part 10's "one status string instead of several booleans".)

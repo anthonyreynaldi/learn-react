@@ -1,0 +1,18 @@
+// Before React 19: ref was NOT a normal prop. You had to wrap the
+// component in forwardRef, which passes the ref as a SECOND argument.
+// You will still see this a lot in existing code and libraries.
+import { forwardRef } from 'react'
+
+const TextField = forwardRef(function TextField({ label, ...inputProps }, ref) {
+  return (
+    <label>
+      {label} <input ref={ref} {...inputProps} />
+    </label>
+  )
+})
+
+// Using it looks the same as in React 19:
+<TextField label="Customer" ref={customerRef} />
+
+// React 19 equivalent (preferred for new code):
+function TextField({ label, ref, ...inputProps }) { ... }

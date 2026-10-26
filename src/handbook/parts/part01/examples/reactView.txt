@@ -1,0 +1,17 @@
+// React: a component is a function. Data goes in, UI comes out.
+//   UI = f(state)
+function OrdersPage({ orders }) {
+  return (
+    <div>
+      <h1>Orders ({orders.length})</h1>
+      <p>First customer: {orders[0].customer}</p>
+    </div>
+  )
+}
+
+// "Calling the view" with data, like view('orders.index', [...]) in Laravel:
+<OrdersPage orders={orders} />
+
+// The big difference: Blade runs ONCE per request on the server.
+// A React component runs again in the browser every time its data changes,
+// so the page stays in sync without a reload.

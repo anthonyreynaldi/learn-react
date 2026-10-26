@@ -1,0 +1,25 @@
+<?php
+// Laravel 5: which routes file for which kind of auth?
+
+// routes/web.php: "web" middleware group: sessions, cookies, CSRF.
+// Use it for session-cookie auth (islands, or an SPA on the same domain).
+Route::middleware('auth')->group(function () {
+    Route::get('/ajax/orders', 'OrderController@index');
+    Route::post('/ajax/orders/{order}/approve', 'OrderController@approve');
+});
+
+// routes/api.php: "api" middleware group: STATELESS in Laravel 5.
+// No session, no cookies, no CSRF. Every request must prove who it is,
+// usually with a token: auth:api uses the "api" guard (config/auth.php).
+Route::middleware('auth:api')->group(function () {
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
+    Route::get('/orders', 'Api\OrderController@index');
+});
+
+// Laravel 5 token options for the api guard:
+//   'driver' => 'token'     → an api_token column on users (simple, built in)
+//   Laravel Passport        → full OAuth2 server
+//   tymon/jwt-auth          → JWT tokens
+// Newer Laravel (7+): Sanctum (SPA cookies + simple API tokens).

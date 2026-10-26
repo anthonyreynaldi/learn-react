@@ -1,0 +1,24 @@
+// Part 10's AuthProvider creates a NEW value object on every render:
+const value = { user, isAdmin, login, logout }
+// → every useAuth() consumer re-renders whenever AuthProvider re-renders,
+//   even if user didn't change.
+
+// Stabilized: same object as long as user is the same.
+import { useCallback, useMemo, useState } from 'react'
+
+export function AuthProvider({ children }) {
+  const [user, setUser] = useState(null)
+
+  const login = useCallback((newUser) => setUser(newUser), [])
+  const logout = useCallback(() => setUser(null), [])
+
+  const value = useMemo(
+    () => ({ user, isAdmin: user?.role === 'admin', login, logout }),
+    [user, login, logout],
+  )
+
+  return <AuthContext value={value}>{children}</AuthContext>
+}
+
+// Only worth it when the provider re-renders often for other reasons and
+// there are many (or expensive) consumers. Measure first.

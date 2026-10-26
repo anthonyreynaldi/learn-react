@@ -1,0 +1,10 @@
+// RIGHT: we pass a FUNCTION. React calls it later, when the button is clicked.
+<button onClick={() => setQty(qty + 1)}>+</button>
+
+// WRONG: setQty(qty + 1) runs immediately while rendering,
+// and its return value (undefined) is passed to onClick.
+// Calling setState during render causes an infinite re-render loop.
+<button onClick={setQty(qty + 1)}>+</button>
+
+// Also RIGHT: passing a function by name (no parentheses!)
+<button onClick={handleClick}>+</button>

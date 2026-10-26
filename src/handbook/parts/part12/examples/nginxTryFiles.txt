@@ -1,0 +1,24 @@
+# Nginx serving the React build directly (separate from Laravel)
+server {
+    listen 80;
+    server_name app.ptmaju.test;
+    root /var/www/react-app/dist;
+
+    location / {
+        # 1. a real file (assets/index-a1b2c3.js)?  serve it
+        # 2. a real folder?                          serve it
+        # 3. otherwise                               serve index.html (React Router decides)
+        try_files $uri $uri/ /index.html;
+    }
+
+    # Hashed files never change: cache them for a year
+    location /assets/ {
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+    }
+
+    # index.html must always be fresh, so users get the newest asset names
+    location = /index.html {
+        add_header Cache-Control "no-cache";
+    }
+}

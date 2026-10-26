@@ -1,0 +1,14 @@
+Development with the Vite proxy
+
+  Browser                     Vite dev server               Laravel
+  http://localhost:5173       localhost:5173                localhost:8000
+ ┌──────────────────┐        ┌──────────────────┐         ┌──────────────────┐
+ │ React app        │  GET   │ /src/*, /assets  │         │                  │
+ │                  │ ─────► │ → served by Vite │         │                  │
+ │ fetch('/api/     │        │                  │  proxy  │ routes/api.php   │
+ │   orders')       │ ─────► │ /api/*  ─────────┼───────► │ Order::all()     │
+ │                  │ ◄───── │          ◄───────┼──────── │ JSON             │
+ └──────────────────┘        └──────────────────┘         └──────────────────┘
+
+The browser only ever talks to localhost:5173 (one origin), so there is no CORS.
+Vite forwards /api requests to Laravel server-to-server, where CORS does not apply.

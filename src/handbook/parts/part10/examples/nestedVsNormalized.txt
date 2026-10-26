@@ -1,0 +1,32 @@
+// ✗ NESTED: customers contain orders, orders contain lines.
+// Updating one line's qty means copying three levels:
+const [customers, setCustomers] = useState([
+  {
+    id: 1, name: 'PT Maju Jaya',
+    orders: [
+      { id: 101, status: 'pending', lines: [{ id: 'a', product: 'Floor Tile 60x60', qty: 3 }] },
+    ],
+  },
+])
+
+setCustomers(customers.map((c) => c.id !== 1 ? c : {
+  ...c,
+  orders: c.orders.map((o) => o.id !== 101 ? o : {
+    ...o,
+    lines: o.lines.map((l) => l.id !== 'a' ? l : { ...l, qty: 4 }),
+  }),
+}))
+
+// ✓ NORMALIZED: like database tables. Flat lists that point to each other by id.
+//   customers table: id, name
+//   orders table:    id, customer_id, status
+//   lines table:     id, order_id, product, qty
+const [customers, setCustomers] = useState([{ id: 1, name: 'PT Maju Jaya' }])
+const [orders, setOrders] = useState([{ id: 101, customerId: 1, status: 'pending' }])
+const [lines, setLines] = useState([{ id: 'a', orderId: 101, product: 'Floor Tile 60x60', qty: 3 }])
+
+// Updating a line is one flat map:
+setLines(lines.map((l) => (l.id === 'a' ? { ...l, qty: 4 } : l)))
+
+// "Joins" are derived during render:
+const orderLines = lines.filter((l) => l.orderId === 101)

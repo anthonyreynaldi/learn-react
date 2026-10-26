@@ -1,0 +1,23 @@
+// The real request to Laravel
+const response = await fetch('/api/orders', {
+  method: 'POST',
+  headers: {
+    // "I am sending JSON" → Laravel parses the body into $request
+    'Content-Type': 'application/json',
+    // "I want JSON back" → on validation failure Laravel answers 422 JSON
+    // instead of a redirect to the previous page (HTML)
+    Accept: 'application/json',
+  },
+  // fetch sends text, so turn the state object into a JSON string
+  body: JSON.stringify(form),
+})
+
+const data = await response.json()
+
+if (response.ok) {
+  // 201 Created: data is the saved order
+} else if (response.status === 422) {
+  // validation failed: data.errors = { customer: ['...'], ... }
+} else {
+  // 401, 403, 500, ...
+}

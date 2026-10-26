@@ -1,0 +1,17 @@
+<?php
+// app/Order.php (Laravel 5)
+// PostgreSQL decimal/numeric columns arrive in PHP as STRINGS ("750000.00"),
+// so json_encode sends strings too. $casts fixes it on the Laravel side.
+class Order extends Model
+{
+    protected $casts = [
+        'total' => 'float',      // "750000.00" → 750000.0  → JSON 750000
+        'qty'   => 'integer',    // "3"         → 3
+        'is_urgent' => 'boolean',// 1 / 0       → true / false
+        // Careful: a 'decimal:2' cast still returns a STRING, on purpose (exact money).
+    ];
+}
+
+// With the casts in place, the React schema can use z.number().
+// Without them, use z.coerce.number() in the schema (see "Fixing data at the boundary").
+// Fixing it in Laravel is better: every client (React, mobile, reports) benefits.

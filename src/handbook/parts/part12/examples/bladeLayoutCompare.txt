@@ -1,0 +1,31 @@
+{{-- Blade: resources/views/layouts/app.blade.php --}}
+<div class="sidebar">...</div>
+<main>
+    @yield('content')            {{-- the child view goes here --}}
+</main>
+
+{{-- resources/views/orders/index.blade.php --}}
+@extends('layouts.app')
+@section('content')
+    <h2>Orders</h2>
+@endsection
+
+{{-- ─────────────────────────────────────────────────────────────── --}}
+{{-- React Router: the layout is a component with <Outlet />          --}}
+
+function AppLayout() {
+  return (
+    <>
+      <aside>...</aside>
+      <main><Outlet /></main>       {/* = @yield('content') */}
+    </>
+  )
+}
+
+<Route element={<AppLayout />}>     {/* = @extends('layouts.app') for all children */}
+  <Route path="orders" element={<OrdersPage />} />
+</Route>
+
+{{-- Difference: Blade re-renders the whole layout on every request.
+     React keeps the layout MOUNTED and swaps only the Outlet,
+     so layout state (a collapsed sidebar, a search box) survives. --}}

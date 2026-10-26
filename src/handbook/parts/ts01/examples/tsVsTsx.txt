@@ -1,0 +1,11 @@
+Extension   Contains                          JavaScript equivalent   Examples
+─────────   ───────────────────────────────   ─────────────────────   ─────────────────────────────
+.ts         TypeScript, NO JSX                .js                     format.ts, api/client.ts,
+                                                                      linesReducer.ts, useFetch.ts
+.tsx        TypeScript WITH JSX               .jsx                    OrderRow.tsx, App.tsx,
+                                                                      AuthContext.tsx
+.d.ts       Only type declarations, no code   –                       vite-env.d.ts, types from
+                                                                      @types/* packages
+
+Rule of thumb: if the file contains <SomeTag>, it must be .tsx.
+(In a .ts file, `<Order>value` is old type-assertion syntax, not JSX.)

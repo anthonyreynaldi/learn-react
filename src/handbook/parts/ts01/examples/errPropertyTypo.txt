@@ -1,0 +1,15 @@
+// ✗ ERROR
+type Order = { id: number; customer: string; total: number }
+
+function orderLabel(order: Order): string {
+  return `#${order.id} ${order.custmer}`
+}
+// Property 'custmer' does not exist on type 'Order'. Did you mean 'customer'?
+
+// The "Did you mean" part usually IS the fix. In plain JavaScript this typo
+// would silently print "undefined" on the page.
+
+// ✓ FIX
+function orderLabel(order: Order): string {
+  return `#${order.id} ${order.customer}`
+}

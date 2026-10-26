@@ -1,0 +1,16 @@
+<?php
+// PHP 7: type hints are checked DYNAMICALLY, while the code runs.
+declare(strict_types=1);
+
+function formatRupiah(int $n): string
+{
+    return 'Rp ' . number_format($n, 0, ',', '.');
+}
+
+echo formatRupiah(750000);    // Rp 750.000
+
+if ($showDiscountRow) {       // maybe only true on the 25th of the month...
+    echo formatRupiah('abc'); // TypeError: Argument 1 passed to formatRupiah()
+}                             // must be of the type int, string given
+// The mistake is only found when THIS line actually runs:
+// in a test, or in production, by a user.

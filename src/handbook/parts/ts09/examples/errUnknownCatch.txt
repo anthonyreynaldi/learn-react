@@ -1,0 +1,15 @@
+// ✗ ERROR
+try {
+  await saveOrder(order)
+} catch (err) {
+  setMessage(err.message)
+}
+// 'err' is of type 'unknown'.
+
+// JavaScript can throw ANYTHING: an Error, a string, a number, an object, undefined.
+// So with strict on, err is unknown until you check it.
+
+// ✓ FIX
+} catch (err) {
+  setMessage(err instanceof Error ? err.message : String(err))
+}

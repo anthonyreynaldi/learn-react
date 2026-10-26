@@ -1,0 +1,28 @@
+// npm i react-error-boundary   (not installed in this project)
+import { ErrorBoundary } from 'react-error-boundary'
+
+function WidgetError({ error, resetErrorBoundary }) {
+  return (
+    <div role="alert">
+      <p>This widget crashed: {error.message}</p>
+      <button onClick={resetErrorBoundary}>Try again</button>
+    </div>
+  )
+}
+
+export function Dashboard() {
+  return (
+    <>
+      <ErrorBoundary
+        FallbackComponent={WidgetError}
+        onError={(error) => reportToServer(error)} // e.g. POST /api/client-errors
+      >
+        <SalesWidget />
+      </ErrorBoundary>
+
+      <ErrorBoundary FallbackComponent={WidgetError}>
+        <StockWidget />
+      </ErrorBoundary>
+    </>
+  )
+}

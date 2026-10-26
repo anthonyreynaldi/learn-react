@@ -1,0 +1,28 @@
+<?php
+// routes/api.php (Laravel 5): stateless, no session, no CSRF token
+Route::post('/orders', 'OrderController@store');
+
+// app/Http/Controllers/OrderController.php
+namespace App\Http\Controllers;
+
+use App\Order;
+use Illuminate\Http\Request;
+
+class OrderController extends Controller
+{
+    public function store(Request $request)
+    {
+        // On failure this throws. Because the request has
+        // "Accept: application/json", Laravel answers 422 with JSON errors
+        // instead of redirecting back.
+        $this->validate($request, [
+            'customer'     => 'required|max:100',
+            'warehouse'    => 'required|in:SBY,JKT',
+            'deliveryDate' => 'required|date|after_or_equal:today',
+        ]);
+
+        $order = Order::create($request->only('customer', 'warehouse', 'deliveryDate'));
+
+        return response()->json($order, 201); // 201 Created
+    }
+}

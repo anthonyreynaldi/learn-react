@@ -1,0 +1,23 @@
+// TRAP: an object created during render is a NEW object every render.
+// Object.is(oldFilters, newFilters) is always false, so the effect
+// runs after EVERY render, as if there were no dependency array.
+// If the effect also sets state, that is an endless loop.
+function OrderList({ status }) {
+  const [orders, setOrders] = useState([])
+  const filters = { status, limit: 20 } // new object each render
+
+  useEffect(() => {
+    fetchOrders(filters).then(setOrders) // sets state → re-render → new filters → ...
+  }, [filters]) // ✗
+}
+
+// FIX 1: create the object INSIDE the effect, depend on primitives.
+useEffect(() => {
+  const filters = { status, limit: 20 }
+  fetchOrders(filters).then(setOrders)
+}, [status]) // ✓ strings compare by value
+
+// FIX 2: depend on the primitive fields directly.
+useEffect(() => {
+  fetchOrders({ status: filters.status, limit: filters.limit }).then(setOrders)
+}, [filters.status, filters.limit]) // ✓

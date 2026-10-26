@@ -1,0 +1,9 @@
+// React: there is no template loop. You use plain JavaScript:
+// map turns the array of data into an array of JSX elements.
+<ul>
+  {products.map((product) => (
+    <li key={product.id}>
+      {product.name} — {formatRupiah(product.price)}
+    </li>
+  ))}
+</ul>

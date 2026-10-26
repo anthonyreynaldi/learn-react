@@ -1,0 +1,40 @@
+{
+  // TypeScript settings for this Vite + React project.
+  // Based on Vite's react-ts template, plus allowJs so the existing
+  // .js/.jsx files keep working next to new .ts/.tsx files.
+  // Run the checker with: npm run typecheck
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2023", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+
+    // Types for Vite features: import x from './file.txt?raw', import.meta.env
+    "types": ["vite/client"],
+
+    // TypeScript only CHECKS; Vite does the actual building
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    // Every file is its own module, so snippet files can each declare `type Order`
+    "moduleDetection": "force",
+
+    // Path alias: '@/utils/format.js' means 'src/utils/format.js'
+    // (Vite needs the same alias in vite.config.js, resolve.alias)
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+
+    // Existing JavaScript files are allowed (but not type-checked)
+    "allowJs": true,
+
+    // Strict mode: the checks that make TypeScript worth it. Keep this on.
+    "strict": true,
+    "noFallthroughCasesInSwitch": true,
+
+    "skipLibCheck": true
+  },
+  "include": ["src"]
+}

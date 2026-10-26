@@ -1,0 +1,13 @@
+// ✗ ERROR
+const statusLabels: Record<OrderStatus, string> = { pending: '…', approved: '…', rejected: '…' }
+const status: string = searchParams.get('status') ?? 'pending'
+statusLabels[status]
+// Element implicitly has an 'any' type because expression of type 'string'
+// can't be used to index type 'Record<OrderStatus, string>'.
+//   No index signature with a parameter of type 'string' was found on type 'Record<OrderStatus, string>'.
+
+// The Record only has three keys; an arbitrary string may not be one of them.
+
+// ✓ FIX: narrow the string to an OrderStatus first
+const known = STATUSES.find((s) => s === status)
+const label = known ? statusLabels[known] : 'Unknown status'

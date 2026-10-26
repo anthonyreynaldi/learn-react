@@ -1,0 +1,9 @@
+// ✗ ERROR
+const [orders, setOrders] = useState([]) // inferred: never[] (an array of NOTHING)
+setOrders(data)
+// Argument of type 'Order[]' is not assignable to parameter of type 'SetStateAction<never[]>'.
+//   Type 'Order[]' is not assignable to type 'never[]'.
+//     Type 'Order' is not assignable to type 'never'.
+
+// ✓ FIX: say what the empty array will hold
+const [orders, setOrders] = useState<Order[]>([])

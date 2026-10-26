@@ -1,0 +1,22 @@
+<!-- Plain JavaScript (imperative): YOU tell the browser every step. -->
+<div>
+  <p>Quantity: <span id="qty">0</span></p>
+  <p>Total: <span id="total">Rp 0</span></p>
+  <button id="add">+</button>
+</div>
+
+<script>
+  const price = 25000
+  let quantity = 0
+
+  const qtyEl = document.getElementById('qty')
+  const totalEl = document.getElementById('total')
+
+  document.getElementById('add').addEventListener('click', () => {
+    quantity = quantity + 1
+    // Step by step: find each element and change its text by hand.
+    // Forget one line and the screen shows stale data.
+    qtyEl.textContent = quantity
+    totalEl.textContent = 'Rp ' + (quantity * price).toLocaleString('id-ID')
+  })
+</script>

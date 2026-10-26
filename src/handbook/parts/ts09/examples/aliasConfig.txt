@@ -1,0 +1,30 @@
+// ── tsconfig.json: tells TYPESCRIPT (and your editor) what "@/" means ──
+{
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  }
+}
+
+// ── vite.config.js: tells VITE (the bundler) the same thing ──
+import { fileURLToPath, URL } from 'node:url'
+import { defineConfig } from 'vite'
+
+export default defineConfig({
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+    },
+  },
+})
+
+// Both are needed: TypeScript only CHECKS imports, Vite actually RESOLVES them.
+// Only tsconfig → editor happy, build fails. Only vite.config → build works, editor shows errors.
+// Any OTHER tool needs it too: running a file directly with `node` fails with
+// "Cannot find package '@/utils'", because Node knows nothing about the alias.
+// (Vitest reads vite.config.js, so tests are fine.)
+
+// Before:  import { formatRupiah } from '../../../../utils/format.js'
+// After:   import { formatRupiah } from '@/utils/format.js'
+// The import stays the same when the file moves to another folder.

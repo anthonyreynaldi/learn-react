@@ -1,0 +1,29 @@
+# Install (the package is "react-router"; react-router-dom is gone in v8)
+npm i react-router
+
+// src/main.jsx — a real app wraps everything in BrowserRouter ONCE
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import { BrowserRouter } from 'react-router'
+import App from './App.jsx'
+
+createRoot(document.getElementById('root')).render(
+  <StrictMode>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </StrictMode>,
+)
+
+// src/App.jsx — the route table, like routes/web.php
+import { Route, Routes } from 'react-router'
+
+export default function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<HomePage />} />            {/* Route::get('/', ...) */}
+      <Route path="/orders" element={<OrdersPage />} />    {/* Route::get('/orders', ...) */}
+      <Route path="*" element={<NotFoundPage />} />         {/* abort(404) */}
+    </Routes>
+  )
+}

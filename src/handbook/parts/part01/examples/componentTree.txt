@@ -1,0 +1,19 @@
+<App>                          // the whole app (like your main layout)
+├── <Header>                   // company name, user menu
+│   └── <UserMenu>
+├── <Sidebar>                  // navigation links
+└── <OrdersPage>               // the current "page"
+    ├── <OrderFilters>         // status: approved / pending / rejected
+    ├── <OrderTable>
+    │   ├── <OrderRow>         // PT Maju Jaya
+    │   ├── <OrderRow>         // CV Sinar Abadi
+    │   └── <OrderRow>         // PT Karya Baru
+    └── <OrderSummary>         // total in Rupiah
+
+Each box is a component: a function that returns a piece of UI.
+Like Blade @include / components, but each one can also hold its own state.
+
+When data changes, React:
+  1. re-runs the affected components (builds a new "virtual DOM" tree in memory)
+  2. compares it with the previous tree (diffing)
+  3. touches the real DOM only where something actually changed

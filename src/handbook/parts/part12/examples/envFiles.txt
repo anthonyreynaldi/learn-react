@@ -1,0 +1,9 @@
+# .env.development   (used by: npm run dev)
+VITE_API_URL=http://localhost:8000
+
+# .env.production    (used by: npm run build)
+VITE_API_URL=https://erp.ptmaju.co.id
+
+# .env.local         (your machine only, git-ignored; overrides the files above)
+# Variables WITHOUT the VITE_ prefix are never sent to the browser,
+# e.g. the handbook's ANTHROPIC_API_KEY, which only the dev server reads.

@@ -1,0 +1,24 @@
+// OrderRow.tsx: typed props
+type OrderRowProps = {
+  order: Order
+  onApprove: (id: number) => void
+  highlighted?: boolean
+}
+
+export function OrderRow({ order, onApprove, highlighted = false }: OrderRowProps) {
+  return (
+    <tr style={{ fontWeight: highlighted ? 'bold' : undefined }}>
+      <td>#{order.id}</td>
+      <td>{order.customer}</td>
+      <td>
+        <button onClick={() => onApprove(order.id)}>Approve</button>
+      </td>
+    </tr>
+  )
+}
+
+// Using it with a typo:
+<OrderRow order={order} onAprove={handleApprove} />
+// ✗ Property 'onAprove' does not exist on type 'OrderRowProps'.
+//   Did you mean 'onApprove'?
+// (In plain JavaScript this typo silently passes undefined and the button does nothing.)

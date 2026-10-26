@@ -1,0 +1,13 @@
+// TypeScript: types are checked STATICALLY, before anything runs.
+function formatRupiah(n: number): string {
+  return 'Rp ' + n.toLocaleString('id-ID')
+}
+
+if (showDiscountRow) {
+  formatRupiah('abc')
+  //           ~~~~~  red underline in the editor, as soon as you type it:
+  // Argument of type 'string' is not assignable to parameter of type 'number'.
+}
+
+// The checker reads the code without running it, so it finds the mistake
+// even inside an if that is rarely true. npm run typecheck reports it too.

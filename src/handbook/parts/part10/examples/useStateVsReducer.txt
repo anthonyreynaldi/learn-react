@@ -1,0 +1,36 @@
+// ─── useState version (Part 9) ───────────────────────────────────────
+// The update logic is spread over several handlers inside the component.
+const [lines, setLines] = useState(initialLines)
+
+function addLine() {
+  setLines([...lines, { id: crypto.randomUUID(), product: '', qty: '1' }])
+}
+function removeLine(id) {
+  setLines(lines.filter((line) => line.id !== id))
+}
+function updateLine(id, field, value) {
+  setLines(lines.map((line) => (line.id === id ? { ...line, [field]: value } : line)))
+}
+
+<button onClick={() => removeLine(line.id)}>Remove</button>
+
+
+// ─── useReducer version ──────────────────────────────────────────────
+// All update logic in ONE pure function, outside the component.
+function linesReducer(lines, action) {
+  switch (action.type) {
+    case 'added_line':
+      return [...lines, { id: action.id, product: '', qty: '1' }]
+    case 'removed_line':
+      return lines.filter((line) => line.id !== action.id)
+    case 'updated_line':
+      return lines.map((line) => (line.id === action.id ? { ...line, [action.field]: action.value } : line))
+    default:
+      throw new Error(`Unknown action: ${action.type}`)
+  }
+}
+
+const [lines, dispatch] = useReducer(linesReducer, initialLines)
+
+// Handlers only describe WHAT happened
+<button onClick={() => dispatch({ type: 'removed_line', id: line.id })}>Remove</button>

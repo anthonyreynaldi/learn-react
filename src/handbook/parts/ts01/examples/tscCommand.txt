@@ -1,0 +1,12 @@
+# Check every file once, without producing output files
+npx tsc --noEmit
+
+# In this project the same command is a script:
+npm run typecheck
+
+# No errors → no output at all. With errors, for example:
+# src/orders/OrderRow.tsx(12,7): error TS2322: Type 'string' is not assignable to type 'number'.
+#                       ^  ^ line, column             ^ error code
+
+# Keep it running while you work (re-checks on every save):
+npx tsc --noEmit --watch

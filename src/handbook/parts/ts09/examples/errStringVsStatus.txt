@@ -1,0 +1,16 @@
+// ✗ ERROR
+const [status, setStatus] = useState<OrderStatus>('pending')
+const value: string = e.target.value
+setStatus(value)
+// Argument of type 'string' is not assignable to parameter of type 'SetStateAction<OrderStatus>'.
+
+// A string could be anything ('aproved', ''), so it can't go where only
+// 'pending' | 'approved' | 'rejected' is allowed.
+
+// ✓ FIX 1: find it in the list of valid values (TS Part 4)
+const next = STATUSES.find((s) => s === value)
+if (next) setStatus(next)
+
+// ✓ FIX 2: validate with Zod (TS Part 8)
+const result = OrderStatusSchema.safeParse(value)
+if (result.success) setStatus(result.data)

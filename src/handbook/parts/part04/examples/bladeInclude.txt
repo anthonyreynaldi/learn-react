@@ -1,0 +1,11 @@
+{{-- Blade: pass data into a partial as an array --}}
+@include('partials.order-summary', [
+    'customer' => 'PT Maju Jaya',
+    'total' => 750000,
+])
+
+{{-- resources/views/partials/order-summary.blade.php --}}
+<div>
+    <p>Customer: {{ $customer }}</p>
+    <p>Total: {{ $total }}</p>
+</div>

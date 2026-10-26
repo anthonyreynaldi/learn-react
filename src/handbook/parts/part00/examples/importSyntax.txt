@@ -1,0 +1,13 @@
+// ----- Exporting (in orders.js) -----
+export function fetchOrders() { /* ... */ }   // named export
+export const STATUSES = ['approved', 'pending', 'rejected']
+export default function OrderList() { /* ... */ } // default export (one per file)
+
+// ----- Importing (in another file) -----
+import OrderList from './orders.js'                 // default: no braces, any name
+import { fetchOrders, STATUSES } from './orders.js' // named: braces, exact names
+import { fetchOrders as loadOrders } from './orders.js' // rename with "as"
+import OrderList2, { STATUSES as ALL } from './orders.js' // both at once
+
+// Packages from node_modules are imported by name, not by path
+import { useState } from 'react'

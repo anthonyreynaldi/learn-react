@@ -1,0 +1,164 @@
+/* Handbook shell styles — you don't need to understand this file yet. */
+@import 'tailwindcss';
+
+/* Dark mode follows the "dark" class on <html> (set by lib/useTheme.js). */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ------------------------------------------------------------------
+   Neutralize the default Vite styles from src/index.css.
+   That file is not in a CSS layer, so it would beat Tailwind's layered
+   styles. These rules undo it without editing index.css.
+   ------------------------------------------------------------------ */
+html:root {
+  font: 16px/1.5 var(--font-sans);
+  letter-spacing: normal;
+  color: inherit;
+  background: none;
+  color-scheme: light;
+}
+html.dark:root {
+  color-scheme: dark;
+}
+html #root {
+  width: auto;
+  max-width: none;
+  margin: 0;
+  border: 0;
+  text-align: left;
+  display: block;
+}
+/* revert-layer = "ignore index.css, use the Tailwind (layered) value instead" */
+.handbook :is(h1, h2, p, code) {
+  all: revert-layer;
+}
+
+@layer components {
+  .icon-button {
+    @apply grid size-9 place-items-center rounded-lg text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100;
+  }
+
+  /* Markdown answers in the "Ask AI" panel */
+  .chat-markdown {
+    @apply leading-relaxed text-zinc-700 dark:text-zinc-300;
+  }
+  .chat-markdown > :first-child {
+    margin-top: 0;
+  }
+  .chat-markdown :is(p, ul, ol, table, blockquote) {
+    @apply my-2;
+  }
+  .chat-markdown :is(h1, h2, h3, h4) {
+    @apply mb-1 mt-4 font-semibold text-zinc-900 dark:text-white;
+  }
+  .chat-markdown ul {
+    @apply list-disc pl-5;
+  }
+  .chat-markdown ol {
+    @apply list-decimal pl-5;
+  }
+  .chat-markdown li + li {
+    @apply mt-1;
+  }
+  .chat-markdown strong {
+    @apply font-semibold text-zinc-900 dark:text-white;
+  }
+  .chat-markdown a {
+    @apply text-sky-700 underline dark:text-sky-400;
+  }
+  .chat-markdown blockquote {
+    @apply border-l-2 border-zinc-300 pl-3 text-zinc-500 dark:border-zinc-600;
+  }
+  .chat-markdown table {
+    @apply border-collapse text-xs;
+  }
+  .chat-markdown :is(th, td) {
+    @apply border border-zinc-200 px-2 py-1 text-left dark:border-zinc-700;
+  }
+  .chat-inline-code {
+    @apply rounded bg-zinc-100 px-1 py-0.5 font-mono text-[0.85em] text-zinc-800 dark:bg-zinc-800 dark:text-zinc-200;
+  }
+
+  /* Highlighted code from Shiki */
+  .code-block pre {
+    @apply m-0 max-h-[36rem] overflow-auto p-4 text-[13px] leading-relaxed text-zinc-100;
+    background: transparent !important;
+    font-family: var(--font-mono);
+    tab-size: 2;
+  }
+
+  /* ----------------------------------------------------------------
+     Base styles for the live "Result" box. Tailwind's reset removes
+     browser defaults, so plain HTML from the examples gets them back
+     here. It always has a white "page" background, like a browser tab.
+     ---------------------------------------------------------------- */
+  .example-result {
+    @apply text-[15px] leading-relaxed text-zinc-800;
+    color-scheme: light;
+  }
+  /* Browser-like vertical spacing between blocks (first/last child flush) */
+  .example-result :is(h1, h2, h3, h4, p, ul, ol, table, pre, hr, blockquote) {
+    margin-block: 0.75rem;
+  }
+  .example-result :is(h1, h2, h3, h4, p, ul, ol, table, pre, hr, blockquote):first-child {
+    margin-top: 0;
+  }
+  .example-result :is(h1, h2, h3, h4, p, ul, ol, table, pre, hr, blockquote):last-child {
+    margin-bottom: 0;
+  }
+  .example-result h1 {
+    @apply text-2xl font-bold text-zinc-900;
+  }
+  .example-result h2 {
+    @apply text-xl font-bold text-zinc-900;
+  }
+  .example-result h3 {
+    @apply text-lg font-semibold text-zinc-900;
+  }
+  .example-result :is(ul, ol) {
+    @apply pl-6;
+  }
+  .example-result ul {
+    list-style: disc;
+  }
+  .example-result ol {
+    list-style: decimal;
+  }
+  .example-result li + li {
+    margin-top: 0.25rem;
+  }
+  .example-result strong,
+  .example-result b {
+    font-weight: 700;
+  }
+  .example-result a {
+    @apply text-sky-700 underline;
+  }
+  .example-result hr {
+    @apply border-zinc-200;
+  }
+  .example-result code {
+    @apply rounded bg-zinc-100 px-1.5 py-0.5 font-mono text-[0.9em];
+  }
+  .example-result table {
+    @apply border-collapse text-sm;
+  }
+  .example-result :is(th, td) {
+    @apply border border-zinc-300 px-3 py-1.5 text-left;
+  }
+  .example-result th {
+    @apply bg-zinc-100 font-semibold;
+  }
+  .example-result button {
+    @apply rounded-md border border-zinc-300 bg-zinc-50 px-3 py-1 text-sm font-medium hover:bg-zinc-100 active:bg-zinc-200;
+  }
+  .example-result :is(input, select, textarea) {
+    @apply rounded-md border border-zinc-300 bg-white px-2 py-1 text-sm;
+  }
+  .example-result input[type='checkbox'],
+  .example-result input[type='radio'] {
+    @apply p-0;
+  }
+  .example-result label {
+    @apply font-medium;
+  }
+}

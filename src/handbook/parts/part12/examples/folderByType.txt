@@ -1,0 +1,21 @@
+Type-based: grouped by WHAT a file is (fine for small apps)
+
+src/
+├── api/
+│   └── client.js
+├── components/          ← every component, shared or not
+│   ├── OrderTable.jsx
+│   ├── OrderForm.jsx
+│   ├── CustomerCard.jsx
+│   └── Button.jsx
+├── hooks/
+│   ├── useFetch.js
+│   └── useDebouncedValue.js
+├── pages/
+│   ├── OrdersPage.jsx
+│   ├── OrderDetailPage.jsx
+│   └── CustomersPage.jsx
+├── context/
+│   └── AuthContext.jsx
+├── App.jsx
+└── main.jsx

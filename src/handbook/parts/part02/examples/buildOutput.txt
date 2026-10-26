@@ -1,0 +1,23 @@
+$ npm run build
+
+> learn-react@0.0.0 build
+> vite build
+
+vite building for production...
+✓ 34 modules transformed.
+dist/index.html                   0.46 kB │ gzip:  0.30 kB
+dist/assets/index-BqD5x1Zk.css    1.39 kB │ gzip:  0.72 kB
+dist/assets/index-C8f2pRw3.js   194.05 kB │ gzip: 60.98 kB
+✓ built in 412ms
+
+dist/                       <- upload THIS folder to the web server
+├── favicon.svg             (copied from public/)
+├── index.html              (script/style tags point to the hashed files)
+└── assets/
+    ├── index-BqD5x1Zk.css  (all CSS, minified)
+    └── index-C8f2pRw3.js   (all JS + React, minified into one file)
+
+The hash in the file name (BqD5x1Zk) changes when the content changes,
+so browsers can cache files forever and still get new versions after a deploy.
+
+$ npm run preview           # serve dist/ locally to check the production build

@@ -1,0 +1,25 @@
+// WRONG: the effect function itself is async.
+useEffect(async () => {
+  const response = await fetch('/api/orders')
+  setOrders(await response.json())
+}, [])
+// An async function ALWAYS returns a Promise (Part 0).
+// But an effect must return either nothing or a cleanup FUNCTION.
+// React would treat the Promise as a cleanup and warn you,
+// and you could not return a real cleanup anymore.
+
+// RIGHT: define an async function inside the effect and call it.
+useEffect(() => {
+  let ignore = false
+
+  async function loadOrders() {
+    const response = await fetch('/api/orders')
+    const data = await response.json()
+    if (!ignore) setOrders(data)
+  }
+
+  loadOrders()
+  return () => {
+    ignore = true // a real cleanup function
+  }
+}, [])

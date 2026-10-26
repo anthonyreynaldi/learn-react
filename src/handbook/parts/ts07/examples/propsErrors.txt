@@ -1,0 +1,22 @@
+type OrderCardProps = {
+  order: Order
+  highlighted?: boolean
+}
+
+// ✗ A required prop is missing:
+<OrderCard />
+// Property 'order' is missing in type '{}' but required in type 'OrderCardProps'.
+
+// ✗ A typo in a prop name:
+<OrderCard order={order} highlited />
+// Type '{ order: Order; highlited: true; }' is not assignable to type 'IntrinsicAttributes & OrderCardProps'.
+//   Property 'highlited' does not exist on type 'IntrinsicAttributes & OrderCardProps'.
+//   Did you mean 'highlighted'?
+
+// ✗ A wrong prop type:
+<OrderCard order={order} highlighted="yes" />
+// Type 'string' is not assignable to type 'boolean | undefined'.
+// (| undefined because the prop is optional)
+
+// In plain JavaScript all three render without complaint:
+// the first crashes on order.id, the other two silently ignore your intent.

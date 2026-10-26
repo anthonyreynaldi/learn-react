@@ -1,0 +1,22 @@
+<!-- resources/views/orders/create.blade.php -->
+<form method="POST" action="{{ route('orders.store') }}">
+    {{ csrf_field() }}
+
+    <label for="customer">Customer</label>
+    <!-- old() refills the field after the redirect back -->
+    <input id="customer" name="customer" value="{{ old('customer') }}">
+    @if ($errors->has('customer'))
+        <div class="error">{{ $errors->first('customer') }}</div>
+    @endif
+
+    <label for="warehouse">Warehouse</label>
+    <select id="warehouse" name="warehouse">
+        <option value="SBY" {{ old('warehouse') == 'SBY' ? 'selected' : '' }}>Surabaya</option>
+        <option value="JKT" {{ old('warehouse') == 'JKT' ? 'selected' : '' }}>Jakarta</option>
+    </select>
+    @if ($errors->has('warehouse'))
+        <div class="error">{{ $errors->first('warehouse') }}</div>
+    @endif
+
+    <button type="submit">Save order</button>
+</form>

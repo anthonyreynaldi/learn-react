@@ -1,0 +1,20 @@
+// A normal function receives arguments...
+function orderSummaryText(customer, total) {
+  return customer + ': ' + total
+}
+orderSummaryText('PT Maju Jaya', 750000)
+
+// ...a component receives ONE argument: an object with all the props.
+function OrderSummary(props) {
+  return (
+    <div>
+      <p>Customer: {props.customer}</p>
+      <p>Total: {props.total}</p>
+    </div>
+  )
+}
+
+// Passing props looks like writing HTML attributes.
+// React collects them into { customer: 'PT Maju Jaya', total: 750000 }
+// and calls OrderSummary with that object.
+<OrderSummary customer="PT Maju Jaya" total={750000} />

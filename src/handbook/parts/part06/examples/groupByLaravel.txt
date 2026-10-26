@@ -1,0 +1,13 @@
+<?php
+// SQL: the database groups and sums for you.
+//   SELECT status, COUNT(*), SUM(total)
+//   FROM orders
+//   GROUP BY status;
+
+// Laravel collections: group in PHP.
+$groups = $orders->groupBy('status');
+// ['approved' => Collection[...], 'pending' => Collection[...], ...]
+
+foreach ($groups as $status => $group) {
+    echo $status . ': ' . $group->count() . ' orders, ' . $group->sum('total');
+}

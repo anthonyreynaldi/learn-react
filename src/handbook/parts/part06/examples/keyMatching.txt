@@ -1,0 +1,16 @@
+How React matches list items between two renders, using keys
+
+BEFORE (render 1)                 AFTER (render 2): order 101 removed
+key=101  PT Maju Jaya             (no 101 → React removes that row)
+key=102  CV Sinar Abadi     ──►   key=102  CV Sinar Abadi   (same key → keep row + its state)
+key=103  PT Karya Baru      ──►   key=103  PT Karya Baru    (same key → keep row + its state)
+
+With key = index instead:
+
+BEFORE                            AFTER
+key=0  PT Maju Jaya         ──►   key=0  CV Sinar Abadi   (React thinks row 0 just changed text)
+key=1  CV Sinar Abadi       ──►   key=1  PT Karya Baru    (row 1 "changed" too)
+key=2  PT Karya Baru              (no key=2 → React removes the LAST row)
+
+React keeps the state of rows 0 and 1 (e.g. a typed note) and deletes
+the last row's state. The notes end up next to the wrong customers.

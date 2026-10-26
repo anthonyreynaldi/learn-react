@@ -1,0 +1,19 @@
+// TOKEN auth (works across domains: app.ptmaju.co.id → api.ptmaju.co.id).
+// 1. Log in once: Laravel returns a token.
+const { token } = await api.post('/api/login', { email, password })
+
+// 2. Send it with every request in the Authorization header.
+fetch('/api/orders', {
+  headers: {
+    Accept: 'application/json',
+    Authorization: `Bearer ${token}`,
+  },
+})
+// Laravel 5's token guard also accepts ?api_token=... in the URL,
+// but headers don't end up in server logs and browser history. Prefer the header.
+
+// 3. Where to keep the token in the browser?
+//   memory (a variable)  → safe from other scripts, but lost on refresh
+//   localStorage         → survives refresh, but ANY script on the page can read it,
+//                          so a single XSS bug leaks every user's token
+//   httpOnly cookie      → JS can't read it at all, but then it's really cookie auth again

@@ -1,0 +1,32 @@
+// ─── Part 8: the manual version ─────────────────────────────────────
+function OrdersList({ status }) {
+  const [orders, setOrders] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+
+  useEffect(() => {
+    let ignore = false                       // race conditions: by hand
+    setLoading(true)
+    fetchOrders({ status })
+      .then((data) => { if (!ignore) setOrders(data) })
+      .catch((err) => { if (!ignore) setError(err.message) })
+      .finally(() => { if (!ignore) setLoading(false) })
+    return () => { ignore = true }
+  }, [status])
+  // No cache: unmount + remount = loading spinner + a new request every time.
+  // Two components needing the same data = two requests.
+  // After approving an order: refetch by hand (reloadCount trick).
+  ...
+}
+
+// ─── TanStack Query ─────────────────────────────────────────────────
+function OrdersList({ status }) {
+  const { data: orders, isPending, error } = useQuery({
+    queryKey: ['orders', { status }],
+    queryFn: ({ signal }) => fetchOrders({ status, signal }),
+  })
+  // Cached per key, shared between components, deduplicated, cancelled
+  // when no longer needed, refetched in the background when stale,
+  // retried on failure. After a change: invalidateQueries({ queryKey: ['orders'] }).
+  ...
+}

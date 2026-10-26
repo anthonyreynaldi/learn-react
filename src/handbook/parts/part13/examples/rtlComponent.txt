@@ -1,0 +1,27 @@
+// npm i -D vitest jsdom @testing-library/react @testing-library/user-event @testing-library/jest-dom
+// src/features/orders/QuantityPicker.test.jsx
+import { describe, expect, it } from 'vitest'
+import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import QuantityPicker from './QuantityPicker'
+
+describe('QuantityPicker', () => {
+  it('updates the total when the user clicks +', async () => {
+    const user = userEvent.setup()
+    render(<QuantityPicker />)
+
+    // Find things the way a USER does: by role and visible text,
+    // not by class names or component internals
+    expect(screen.getByText('Total: Rp 25.000')).toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: '+' }))
+
+    expect(screen.getByText('Total: Rp 50.000')).toBeInTheDocument()
+  })
+
+  it('does not go below 1', () => {
+    render(<QuantityPicker />)
+
+    expect(screen.getByRole('button', { name: '−' })).toBeDisabled()
+  })
+})

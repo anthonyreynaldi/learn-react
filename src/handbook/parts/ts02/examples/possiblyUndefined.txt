@@ -1,0 +1,13 @@
+type Order = { id: number; customer: string; total: number }
+declare const orders: Order[]
+
+const order = orders.find((o) => o.id === 999) // type: Order | undefined
+
+// ✗ ERROR
+console.log(order.customer)
+//          ~~~~~
+// 'order' is possibly 'undefined'.
+
+// In plain JavaScript this line compiles fine and then crashes at runtime:
+// TypeError: Cannot read properties of undefined (reading 'customer')
+// With "strict": true, TypeScript makes you handle the "not found" case first.

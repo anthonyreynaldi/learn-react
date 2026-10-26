@@ -1,0 +1,28 @@
+// WRONG: a component can only return ONE root element.
+// (It compiles to "return jsx(...) jsx(...)" which is not valid JavaScript.)
+function OrderInfo() {
+  return (
+    <h3>PT Maju Jaya</h3>
+    <p>Status: approved</p>
+  )
+}
+
+// RIGHT: wrap them in a <div> ...
+function OrderInfo() {
+  return (
+    <div>
+      <h3>PT Maju Jaya</h3>
+      <p>Status: approved</p>
+    </div>
+  )
+}
+
+// ... or in a Fragment <>...</> when you don't want an extra element in the HTML.
+function OrderInfo() {
+  return (
+    <>
+      <h3>PT Maju Jaya</h3>
+      <p>Status: approved</p>
+    </>
+  )
+}

@@ -1,0 +1,21 @@
+// BUGGY: starts an interval but never stops it.
+function LiveClock() {
+  const [time, setTime] = useState('')
+
+  useEffect(() => {
+    setInterval(() => {
+      setTime(new Date().toLocaleTimeString())
+    }, 1000)
+    // ✗ no cleanup
+  }, [])
+
+  return <p>{time}</p>
+}
+
+// In development, StrictMode runs: mount → cleanup → mount.
+// There is no cleanup, so now TWO intervals are running.
+// After hiding and showing the clock 5 times there are 6 or more timers,
+// all still calling setTime, even for clocks that are no longer on screen.
+//
+// FIX: return () => clearInterval(id)
+// StrictMode's double run is exactly what makes this bug visible early.

@@ -1,0 +1,20 @@
+// A component is just a function that returns JSX.
+// Its name MUST start with a capital letter.
+function Header() {
+  return <h1>PT Platinum Ceramics - Orders</h1>
+}
+
+function Page() {
+  return (
+    <div>
+      {/* lowercase = a built-in HTML tag: React creates a real <header> element */}
+      <header>Plain HTML header tag</header>
+
+      {/* Capitalized = your component: React calls Header() and renders what it returns */}
+      <Header />
+    </div>
+  )
+}
+
+// If you name it "header" (lowercase), React thinks you mean the HTML tag
+// and your function is never called.

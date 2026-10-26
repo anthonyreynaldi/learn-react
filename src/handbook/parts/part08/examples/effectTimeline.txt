@@ -1,0 +1,18 @@
+setCount(1) is called
+   │
+   ▼
+1. RENDER   React calls DocumentTitle(). It returns JSX with "Clicked 1 times".
+   │        (No side effects allowed here.)
+   ▼
+2. COMMIT   React updates the button text in the DOM.
+   │
+   ▼
+3. PAINT    The browser shows the new button text on screen.
+   │
+   ▼
+4. CLEANUP  The PREVIOUS effect's cleanup runs (restores the old title).
+   │
+   ▼
+5. EFFECT   The new effect runs: document.title = "Clicked 1 times".
+
+Effects run last, so they never slow down showing the new UI.

@@ -1,0 +1,15 @@
+my-app/
+├── node_modules/        installed packages (like vendor/) - never edit, never commit
+├── public/              static files copied as-is (like Laravel's public/)
+│   └── favicon.svg
+├── src/                 your application code (like app/ + resources/)
+│   ├── assets/          images etc. imported from code
+│   ├── App.css
+│   ├── App.jsx          the root component
+│   ├── index.css        global styles
+│   └── main.jsx         entry point: mounts <App /> into the page
+├── .gitignore
+├── index.html           the single HTML page the app runs in
+├── package.json         project info, scripts, dependencies (like composer.json)
+├── package-lock.json    exact installed versions (like composer.lock)
+└── vite.config.js       build tool config

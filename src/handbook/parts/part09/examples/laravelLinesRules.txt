@@ -1,0 +1,18 @@
+<?php
+// Validating an array of order lines in Laravel 5
+$this->validate($request, [
+    'customer'        => 'required|max:100',
+    'lines'           => 'required|array|min:1',
+    // The * means "every item in the array"
+    'lines.*.product' => 'required',
+    'lines.*.qty'     => 'required|integer|min:1',
+]);
+
+// Errors use the real index of the failing item:
+// {
+//   "errors": {
+//     "lines.0.product": ["The lines.0.product field is required."],
+//     "lines.2.qty":     ["The lines.2.qty must be at least 1."]
+//   }
+// }
+// That's why React must send the lines in the SAME order it renders them.

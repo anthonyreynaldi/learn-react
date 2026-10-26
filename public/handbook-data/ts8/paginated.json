@@ -1,0 +1,17 @@
+{
+  "current_page": 1,
+  "data": [
+    { "id": 101, "customer": "PT Maju Jaya", "total": 750000, "status": "approved" },
+    { "id": 102, "customer": "CV Sinar Abadi", "total": 1250000, "status": "pending" }
+  ],
+  "first_page_url": "http://erp.ptmaju.test/api/orders?page=1",
+  "from": 1,
+  "last_page": 4,
+  "last_page_url": "http://erp.ptmaju.test/api/orders?page=4",
+  "next_page_url": "http://erp.ptmaju.test/api/orders?page=2",
+  "path": "http://erp.ptmaju.test/api/orders",
+  "per_page": 2,
+  "prev_page_url": null,
+  "to": 2,
+  "total": 8
+}

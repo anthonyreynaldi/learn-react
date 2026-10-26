@@ -1,0 +1,36 @@
+// With 40 orders, the table sorts and pages in the browser. With 100,000 orders,
+// let Laravel + PostgreSQL do it, and give the table one ready-made page.
+
+// ── React: Table only DISPLAYS; Query FETCHES the requested page ──
+const [pagination, setPagination] = useState<PaginationState>({ pageIndex: 0, pageSize: 25 })
+const [sorting, setSorting] = useState<SortingState>([{ id: 'created_at', desc: true }])
+
+const { data } = useQuery({
+  // Every server-owned setting belongs in the key: page 2 and page 3 are different data
+  queryKey: ['orders', { page: pagination.pageIndex + 1, size: pagination.pageSize, sorting }],
+  queryFn: () => fetchOrdersPage(pagination, sorting), // GET /api/orders?page=2&per_page=25&sort=-created_at
+  placeholderData: keepPreviousData, // keep showing the old page while the next one loads
+})
+
+const table = useTable({
+  features, // rowSortingFeature + rowPaginationFeature, WITHOUT the client row models
+  columns,
+  data: data?.data ?? emptyOrders, // one page of rows (emptyOrders: a stable module-level [])
+  rowCount: data?.total, // so Table knows how many pages exist
+  manualPagination: true, // "the data IS the current page, don't slice it"
+  manualSorting: true, // "the data is already sorted, don't reorder it"
+  state: { pagination, sorting },
+  onPaginationChange: setPagination,
+  onSortingChange: setSorting,
+})
+
+// ── Laravel: the controller does the heavy lifting ──
+public function index(Request $request)
+{
+    $allowed = ['id', 'customer', 'total', 'created_at']; // never orderBy raw user input
+    $sort = ltrim($request->input('sort', '-created_at'), '-');
+    $direction = str_starts_with($request->input('sort', '-created_at'), '-') ? 'desc' : 'asc';
+
+    return Order::orderBy(in_array($sort, $allowed) ? $sort : 'created_at', $direction)
+        ->paginate($request->input('per_page', 25));   // → { data, current_page, last_page, total, ... }
+}

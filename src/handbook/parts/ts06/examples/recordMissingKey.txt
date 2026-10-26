@@ -1,0 +1,16 @@
+// A new status is added to the list...
+export const STATUSES = ['pending', 'approved', 'rejected', 'cancelled'] as const
+export type OrderStatus = (typeof STATUSES)[number]
+
+// ...but not to the labels:
+const statusLabels: Record<OrderStatus, string> = {
+  pending: 'Waiting for approval',
+  approved: 'Approved ✓',
+  rejected: 'Rejected ✗',
+}
+// ✗ Property 'cancelled' is missing in type '{ pending: string; approved: string; rejected: string; }'
+//   but required in type 'Record<"approved" | "cancelled" | "pending" | "rejected", string>'.
+
+// TypeScript points at every lookup object that needs the new status,
+// before a user ever sees an empty label. (With a plain object, it would
+// silently show undefined for cancelled orders.)

@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    // The family of core checks: no implicit any, null/undefined must be handled, ...
+    "strict": true,
+
+    // arr[0] and record['key'] include | undefined (the item may not exist)
+    "noUncheckedIndexedAccess": true,
+
+    // Error for local variables that are declared but never used
+    "noUnusedLocals": true,
+
+    // Error for function parameters that are never used (prefix with _ to allow one)
+    "noUnusedParameters": true,
+
+    // Type-only imports must say so: import type { Order } from './types'
+    "verbatimModuleSyntax": true
+  }
+}
+
+// This project uses strict + verbatimModuleSyntax. The other three are NOT turned on
+// for the whole project, because the existing JavaScript lessons were written without
+// them. In a new TypeScript project, turning them all on from day one is easy;
+// adding them later means fixing every old file at once.

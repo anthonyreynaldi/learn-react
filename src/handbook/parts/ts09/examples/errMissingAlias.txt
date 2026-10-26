@@ -1,0 +1,13 @@
+// ✗ ERROR
+import { formatRupiah } from '@/utils/formatt.js'
+// Cannot find module '@/utils/formatt.js' or its corresponding type declarations.
+
+// Check, in this order:
+// 1. A typo in the path? (formatt → format)
+// 2. Does the file really exist under src/ ?
+// 3. Is "@/*": ["./src/*"] in tsconfig.json "paths"?
+// 4. Does vite.config.js have the same alias? (if not, the editor is fine but the build fails)
+// 5. After editing tsconfig.json: VS Code → "TypeScript: Restart TS Server".
+
+// ✓ FIX
+import { formatRupiah } from '@/utils/format.js'

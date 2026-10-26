@@ -1,0 +1,26 @@
+// WRONG: a hook inside an if.
+function OrderForm({ isEditing }) {
+  if (isEditing) {
+    const [note, setNote] = useState('') // called only sometimes!
+  }
+  const [qty, setQty] = useState(1)
+  // React matches hooks by CALL ORDER, not by name.
+  // When isEditing changes, qty's state ends up in the wrong slot.
+}
+
+// RIGHT: every hook at the top level, before any if or return.
+function OrderForm({ isEditing }) {
+  const [note, setNote] = useState('')
+  const [qty, setQty] = useState(1)
+
+  // Put the condition in the JSX (or in a handler) instead.
+  return (
+    <form>
+      {isEditing && <input value={note} onChange={(e) => setNote(e.target.value)} />}
+      <input value={qty} onChange={(e) => setQty(Number(e.target.value))} />
+    </form>
+  )
+}
+
+// Also WRONG: hooks inside loops, nested functions, or after an early return.
+// Only call hooks in components (or custom hooks whose name starts with "use").

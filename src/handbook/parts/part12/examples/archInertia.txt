@@ -1,0 +1,22 @@
+<?php
+// (C) Inertia: Laravel keeps routing and controllers, React replaces Blade.
+// NOTE: the current Inertia Laravel adapter needs PHP 8.1+ and Laravel 10+.
+
+use Inertia\Inertia;
+
+class OrderController extends Controller
+{
+    public function index()
+    {
+        // Instead of view('orders.index', [...]):
+        // render the React page component resources/js/Pages/Orders/Index.jsx
+        // and pass the data as its props.
+        return Inertia::render('Orders/Index', [
+            'orders' => Order::latest()->get(),
+        ]);
+    }
+}
+
+// resources/js/Pages/Orders/Index.jsx receives it as props:
+//   export default function Index({ orders }) { ... }
+// Navigation uses Inertia's <Link>: XHR requests, no full reloads, no React Router.

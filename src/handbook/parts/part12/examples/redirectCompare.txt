@@ -1,0 +1,20 @@
+// Laravel: the controller redirects after saving (POST → redirect → GET)
+public function store(Request $request)
+{
+    $order = Order::create($request->all());
+    return redirect()->route('orders.show', $order);
+}
+
+// React Router: the component navigates after the API call succeeds
+const navigate = useNavigate()
+
+async function handleSubmit(e) {
+  e.preventDefault()
+  const order = await api.post('/api/orders', form)
+  navigate(`/orders/${order.id}`, { replace: true })
+}
+
+// navigate('/orders')               → push a new history entry (like clicking a link)
+// navigate('/orders', { replace })  → replace the current entry (Back skips it)
+// navigate(-1) / navigate(1)        → Back / Forward
+// <Navigate to="/login" />          → the same, as a component (for redirects during render)

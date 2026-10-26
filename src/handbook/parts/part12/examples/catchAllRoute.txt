@@ -1,0 +1,11 @@
+<?php
+// routes/web.php: put this LAST, after every other web route.
+// Every non-API URL (/orders, /orders/101, /reports/sales?status=pending)
+// returns the React app's index.html; React Router then shows the right page.
+
+Route::get('/{any}', function () {
+    return file_get_contents(public_path('app/index.html'));
+})->where('any', '^(?!api).*$'); // anything that does NOT start with "api"
+
+// Without this route: refreshing /orders/101 asks LARAVEL for /orders/101,
+// Laravel has no such route → 404. React never gets a chance to run.

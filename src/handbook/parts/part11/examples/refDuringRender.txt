@@ -1,0 +1,26 @@
+// ✗ WRONG: reading and writing a ref during render
+function OrderTable({ orders }) {
+  const renderCount = useRef(0)
+  renderCount.current = renderCount.current + 1 // write during render
+
+  return (
+    <>
+      <p>Rendered {renderCount.current} times</p> {/* read during render */}
+      ...
+    </>
+  )
+}
+
+// Why it is wrong:
+// 1. Changing a ref doesn't re-render, so the number on screen is only
+//    updated "by accident" when something else re-renders. It shows stale data.
+// 2. StrictMode renders twice in development, so the count jumps by 2.
+// 3. React may render and then throw the result away (concurrent rendering),
+//    so the count includes renders that never reached the screen.
+// 4. It makes the component impure (Part 7): same props, different output.
+//
+// ✓ RIGHT: refs are for event handlers and effects.
+//   - If the value is shown on screen → useState.
+//   - If you only need it later (timer id, latest value, DOM node) → useRef,
+//     read and written in handlers or effects.
+// (Exception: lazily creating something once, `if (ref.current === null) ref.current = ...`.)

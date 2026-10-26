@@ -1,0 +1,17 @@
+// 1. Parentheses: implicit return. The JSX IS the return value.
+{products.map((product) => (
+  <li key={product.id}>{product.name}</li>
+))}
+
+// 2. Braces: a function body. You MUST write return.
+//    Useful when you need a variable first.
+{products.map((product) => {
+  const label = product.name.toUpperCase()
+  return <li key={product.id}>{label}</li>
+})}
+
+// 3. WRONG: braces without return. The function returns undefined,
+//    so nothing is rendered (and there is no error message!).
+{products.map((product) => {
+  <li key={product.id}>{product.name}</li>
+})}

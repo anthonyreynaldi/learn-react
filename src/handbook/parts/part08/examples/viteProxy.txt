@@ -1,0 +1,18 @@
+// vite.config.js
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+
+export default defineConfig({
+  plugins: [react()],
+  server: {
+    proxy: {
+      // Any request starting with /api is forwarded to Laravel.
+      // fetch('/api/orders') → http://localhost:8000/api/orders
+      '/api': 'http://localhost:8000',
+    },
+  },
+})
+
+// Start both servers:
+//   php artisan serve     (Laravel on port 8000)
+//   npm run dev           (Vite on port 5173)

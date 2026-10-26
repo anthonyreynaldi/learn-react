@@ -1,0 +1,18 @@
+// CASE 1: a value calculated from props/state
+
+// ✗ WRONG: extra state + effect to keep it in sync
+function OrderReport({ orders }) {
+  const [search, setSearch] = useState('')
+  const [visible, setVisible] = useState(orders)
+
+  useEffect(() => {
+    setVisible(orders.filter((o) => o.customer.includes(search)))
+  }, [orders, search])
+  // Renders twice per keystroke (first with the OLD list), more code, can get out of sync
+}
+
+// ✓ RIGHT: calculate it during render
+function OrderReport({ orders }) {
+  const [search, setSearch] = useState('')
+  const visible = orders.filter((o) => o.customer.includes(search))
+}

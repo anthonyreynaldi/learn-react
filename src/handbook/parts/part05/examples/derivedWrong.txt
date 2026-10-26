@@ -1,0 +1,23 @@
+// WRONG: total is stored in its own state.
+function QuantityPicker() {
+  const [qty, setQty] = useState(1)
+  const [total, setTotal] = useState(25000) // duplicate information
+
+  function handlePlus() {
+    setQty(qty + 1)
+    setTotal((qty + 1) * 25000) // must remember to update it EVERY time
+  }
+
+  function handleMinus() {
+    setQty(qty - 1)
+    // forgot setTotal here -> total is now wrong
+  }
+  // ...
+}
+
+// RIGHT: store only qty, calculate total during render.
+function QuantityPicker() {
+  const [qty, setQty] = useState(1)
+  const total = qty * 25000
+  // ...
+}

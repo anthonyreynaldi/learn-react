@@ -1,0 +1,12 @@
+// The parent owns the data and passes it down.
+function OrderPage() {
+  const customer = 'PT Maju Jaya'
+  const total = 750000
+  return <OrderHeader customer={customer} total={total} />
+}
+
+// The child only reads its props. It cannot reach "up" and change
+// customer or total inside OrderPage.
+function OrderHeader({ customer, total }) {
+  return <h2>{customer} - {total}</h2>
+}
